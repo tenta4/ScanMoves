@@ -8,8 +8,6 @@ class PhysicalExerciseDetector
 {
     BGDetector *bgdetector;
     MarkerFinder marker_finder;
-    enum CurrStage{ST_BG_DETECTION, ST_ETALON, ST_GAME};
-    CurrStage curr_stage;
 public:
     PhysicalExerciseDetector();
     void pushBackGroungImage(const IplImage*);

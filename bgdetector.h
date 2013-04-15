@@ -3,6 +3,7 @@
 #include "vector"
 #include "opencv/highgui.h"
 #include "opencv/cv.h"
+#include <stdexcept>
 class BGDetector
 {
 public:
