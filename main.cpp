@@ -58,12 +58,12 @@ int main(int argc, char** argv)
 
           if (WRITE_TO_FILE == 0)   for(;;)
           {
-                    IplImage* image1 = camera->getFrame();
+                    IplImage* image = camera->getFrame();
                     CvFont font;
                     cvInitFont( &font, CV_FONT_HERSHEY_SIMPLEX, 1.3f, 1.3f,0,3, 8 );
-                    cvPutText( image1, "Get away and press any key", cvPoint(4,120), &font, CV_RGB(0,0,255) );
+                    cvPutText( image, "Get away and press any key", cvPoint(4,120), &font, CV_RGB(0,0,255) );
 
-                    cvShowImage( "Motion", image1);
+                    cvShowImage( "Motion", image);
                     if( cvWaitKey(10) >= 0 )  break;
                     //cvReleaseImage(&image1);
           }
