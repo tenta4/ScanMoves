@@ -1,11 +1,12 @@
 #define MAX_CAM_CADR 10
 
-#include "webcam.h"
-#include "iwebcam.h"
-#include "webcamemul.h"
+#include ".\VideoSource\webcam.h"
+#include ".\VideoSource\iwebcam.h"
+#include ".\VideoSource\webcamemul.h"
 #include "physicalexercisedetector.h"
 
 #define WRITE_TO_FILE 0//1-write 2-read
+
 void writeToFile(const IplImage* image)
 {
     static int count_frames_i = 0;

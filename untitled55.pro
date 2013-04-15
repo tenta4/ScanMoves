@@ -12,23 +12,25 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     bgdetector.cpp \
-    webcam.cpp \
     markerfinder.cpp \
-    iwebcam.cpp \
-    webcamemul.cpp \
-    physicalexercisedetector.cpp
+    physicalexercisedetector.cpp \
+    VideoSource/webcamemul.cpp \
+    VideoSource/webcam.cpp \
+    VideoSource/iwebcam.cpp
 
 HEADERS  += \
     bgdetector.h \
-    webcam.h \
     markerfinder.h \
-    iwebcam.h \
-    webcamemul.h \
-    physicalexercisedetector.h
+    physicalexercisedetector.h \
+    VideoSource/webcamemul.h \
+    VideoSource/webcam.h \
+    VideoSource/iwebcam.h
 
 FORMS    +=
 INCLUDEPATH += C:/OpenCV/mingw/install/include
 LIBS += C:/OpenCV/mingw/install/lib/*.a
+
+
 
 
 
