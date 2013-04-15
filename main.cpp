@@ -1,16 +1,10 @@
-#include <QtGui/QApplication>
-#include "mainwindow.h"
-
-#include <opencv2/video/background_segm.hpp>
-#include <opencv2/legacy/legacy.hpp>
-
 #define MAX_CAM_CADR 10
-#include "QDebug"
+
 #include "webcam.h"
 #include "iwebcam.h"
 #include "webcamemul.h"
-
 #include "physicalexercisedetector.h"
+
 #define WRITE_TO_FILE 0//1-write 2-read
 void writeToFile(const IplImage* image)
 {
