@@ -51,8 +51,12 @@ int main(int argc, char** argv)
 
           PhysicalExerciseDetector detector;
 
-          // вывод изображения с сообщением
-          if (WRITE_TO_FILE == 0)for(;;)
+
+          /**************************
+          * Message to user
+          ***************************/
+
+          if (WRITE_TO_FILE == 0)   for(;;)
           {
                     IplImage* image1 = camera->getFrame();
                     CvFont font;
@@ -65,7 +69,9 @@ int main(int argc, char** argv)
           }
 
 
-          //обучаем фон
+          /**************************
+          * Remember background color
+          ***************************/
 
           for(int i=0;i<MAX_CAM_CADR;i++)
           {
@@ -80,15 +86,19 @@ int main(int argc, char** argv)
 
                 //cvReleaseImage(&image);
 
-                if( cvWaitKey(20) >= 0 ) exit(0);
+                cvWaitKey(20);
 
           }
 
-          //Получение цвета маркера
+          /**************************
+          * Getting markers colors
+          ***************************/
+
           for(int i=0;i<MAX_CAM_CADR*4;i++)
           {
 
                 IplImage* image = camera->getFrame();
+
                 if (WRITE_TO_FILE == 1)
                 {
                     writeToFile(image);
@@ -107,7 +117,8 @@ int main(int argc, char** argv)
                 for (int i = 0 ; i<init_positions.size() ; i++)
                     cvDrawCircle(image,init_positions.at(i),10,cvScalar(200,200,0),3);
 
-                if( cvWaitKey(20) >= 0 ) exit(0);
+                cvWaitKey(20);
+
                 cvShowImage( "Motion", image);
 
                 //cvReleaseImage(&image);
@@ -115,12 +126,16 @@ int main(int argc, char** argv)
           }
 
 
-          //Цикл обработки изображений
+          /**************************
+          * Scaning images
+          ***************************/
 
           for(;;)
           {
                 IplImage* image = 0;
-                try{
+
+                try
+                {
                     image = camera->getFrame();
                 }
                 catch(IWebCam::ErrorGrabFrame e){break;}
@@ -138,6 +153,7 @@ int main(int argc, char** argv)
           }
 
           //Удаляем все
+          delete camera;
           cvDestroyWindow( "Motion" );
 
     return 0;
