@@ -2,7 +2,7 @@
 #define PHYSICALEXERCISEDETECTOR_H
 #include "opencv/highgui.h"
 #include "opencv/cv.h"
-#include "bgdetector.h"
+#include "BackgroundSubtraction/bgdetector.h"
 #include "markerfinder.h"
 class PhysicalExerciseDetector
 {
