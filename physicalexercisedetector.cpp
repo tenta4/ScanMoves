@@ -2,18 +2,19 @@
 
 PhysicalExerciseDetector::PhysicalExerciseDetector()
 {
-    bgdetector = new BGDetector(40);
+    bgteacher = new BGTeacher();
 }
 void PhysicalExerciseDetector::pushBackGroungImage(const IplImage * input_img)
 {
     IplImage * hsv = cvCreateImage(cvGetSize(input_img),8,3);
     cvCvtColor(input_img,hsv, CV_BGR2HSV);
-    bgdetector->push(hsv);
+    bgteacher->push(hsv);
 }
 void PhysicalExerciseDetector::pushEtalonMarkersImage(const IplImage * input_img, std::vector <CvPoint> init_markers_position)
 {
 
-    bgdetector->calc();
+    bgteacher->calc();
+    bgdetector = new BGDetector(bgteacher,40);
 
     IplImage * hsv = cvCreateImage(cvGetSize(input_img),8,3);
     cvCvtColor(input_img,hsv, CV_BGR2HSV);

@@ -3,21 +3,19 @@
 #include "vector"
 #include "opencv/highgui.h"
 #include "opencv/cv.h"
-#include <stdexcept>
+#include "bgteacher.h"
+
 class BGDetector
 {
 public:
-    BGDetector(int);
-    void push(IplImage *);
-    void calc();
+
+    BGDetector(BGTeacher*, int);
     void checkImg(IplImage*);
     ~BGDetector();
 
 private:
     int threshold;
-    int *mid;
-    std::vector <IplImage*> images;
-
+    BGTeacher* bgteacher;
 };
 
 #endif // BGDETECTOR_H

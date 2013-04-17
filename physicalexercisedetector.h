@@ -3,9 +3,12 @@
 #include "opencv/highgui.h"
 #include "opencv/cv.h"
 #include "BackgroundSubtraction/bgdetector.h"
+#include "BackgroundSubtraction/bgteacher.h"
+
 #include "markerfinder.h"
 class PhysicalExerciseDetector
 {
+    BGTeacher *bgteacher;
     BGDetector *bgdetector;
     MarkerFinder marker_finder;
 public:
