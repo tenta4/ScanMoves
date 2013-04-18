@@ -12,7 +12,7 @@ class PhysicalExerciseDetector
 {
     BGTeacher *bgteacher;
     BGDetector *bgdetector;
-    MarkerFinder marker_finder;
+    MarkerFinder* marker_finder;
     ColorsStorage* colors_storage;
 public:
     PhysicalExerciseDetector();
