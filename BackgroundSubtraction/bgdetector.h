@@ -9,11 +9,12 @@ class BGDetector
 {
 public:
 
-    BGDetector(BGTeacher*, int);
+    BGDetector(BGTeacher* bgteacher, int threshold, int square_size);
     void checkImg(IplImage*);
     ~BGDetector();
 
 private:
+    int square;
     int threshold;
     BGTeacher* bgteacher;
 };

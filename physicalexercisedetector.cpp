@@ -14,7 +14,7 @@ void PhysicalExerciseDetector::pushEtalonMarkersImage(const IplImage * input_img
 {
 
     bgteacher->calc();
-    bgdetector = new BGDetector(bgteacher,40);
+    bgdetector = new BGDetector(bgteacher, 40, 4);
 
     IplImage * hsv = cvCreateImage(cvGetSize(input_img),8,3);
     cvCvtColor(input_img,hsv, CV_BGR2HSV);
