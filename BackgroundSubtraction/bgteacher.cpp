@@ -2,8 +2,10 @@
 
 void BGTeacher::push(IplImage * input_img)
 {
-    bg_size = cvGetSize(input_img);
-    images.push_back(input_img);
+    IplImage* tmp = cvCreateImage(cvGetSize(input_img), 8, 3);
+    cvCopy(input_img,tmp);
+    bg_size = cvGetSize(tmp);
+    images.push_back(tmp);
 }
 BGTeacher::BGTeacher()
 {
