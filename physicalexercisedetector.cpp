@@ -2,7 +2,9 @@
 
 PhysicalExerciseDetector::PhysicalExerciseDetector()
 {
+    bgdetector = 0;
     bgteacher = new BGTeacher();
+    colors_storage = new ColorsStorage();
 }
 void PhysicalExerciseDetector::pushBackGroungImage(const IplImage * input_img)
 {
@@ -14,12 +16,12 @@ void PhysicalExerciseDetector::pushEtalonMarkersImage(const IplImage * input_img
 {
 
     bgteacher->calc();
-    bgdetector = new BGDetector(bgteacher, 40, 4);
+    if (!bgdetector) bgdetector = new BGDetector(bgteacher, 40, 4);
 
     IplImage * hsv = cvCreateImage(cvGetSize(input_img),8,3);
     cvCvtColor(input_img,hsv, CV_BGR2HSV);
 
-    marker_finder.setEtalon(hsv,init_markers_position);
+    colors_storage->setEtalon(hsv,init_markers_position);
     cvReleaseImage(&hsv);
 }
 
@@ -28,6 +30,6 @@ void PhysicalExerciseDetector::pushGameImage(const IplImage * input_img)
     IplImage * hsv = cvCreateImage(cvGetSize(input_img),8,3);
     cvCvtColor(input_img,hsv, CV_BGR2HSV);
     bgdetector->checkImg(hsv);
-    marker_finder.getMarkers(hsv);
+    marker_finder.getMarkers(hsv, colors_storage);
     cvReleaseImage(&hsv);
 }

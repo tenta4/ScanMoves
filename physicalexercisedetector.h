@@ -5,12 +5,15 @@
 #include "BackgroundSubtraction/bgdetector.h"
 #include "BackgroundSubtraction/bgteacher.h"
 
-#include "markerfinder.h"
+#include "MarkerFinder/markerfinder.h"
+#include "MarkerFinder/colorsstorage.h"
+
 class PhysicalExerciseDetector
 {
     BGTeacher *bgteacher;
     BGDetector *bgdetector;
     MarkerFinder marker_finder;
+    ColorsStorage* colors_storage;
 public:
     PhysicalExerciseDetector();
     void pushBackGroungImage(const IplImage*);

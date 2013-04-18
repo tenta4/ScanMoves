@@ -3,9 +3,9 @@
 
 BGDetector::BGDetector(BGTeacher* bgt, int t, int sq) : threshold(t)
 {
-    if (sq > 40)  throw std::out_of_range("to big square value");
-    if (bgt == 0) throw std::out_of_range("Bgteacher* = 0");
-    if (bgt->getMiddle() == 0) throw std::out_of_range("You have not background images");
+    if (sq > 40)                throw std::out_of_range("to big square value");
+    if (bgt == 0)               throw std::out_of_range("Bgteacher* = 0");
+    if (bgt->getMiddle() == 0)  throw std::out_of_range("You have not background images");
 
     square    = sq;
     bgteacher = bgt;

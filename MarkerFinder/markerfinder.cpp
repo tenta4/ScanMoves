@@ -23,18 +23,6 @@ void MarkerFinder::recursion(int x, int y, uchar* ptr)
         recursion(x,y-1,ptr);
     }
 }
-void MarkerFinder::setEtalon(const IplImage *input_img, std::vector <CvPoint> init_markers_position)
-{
-
-    etalon_marker_colors.clear();
-    for (int i = 0 ; i<init_markers_position.size() ; i++)
-    {
-        etalon_marker_colors.push_back(
-              cvGet2D(input_img,init_markers_position.at(i).y, init_markers_position.at(i).x));
-    }
-    image_width = input_img->width;
-    image_height = input_img->height;
-}
 
 void MarkerFinder::inRange(IplImage *src, std::vector <CvScalar> colors, int range, IplImage *dst)
 {
@@ -52,11 +40,13 @@ void MarkerFinder::inRange(IplImage *src, std::vector <CvScalar> colors, int ran
                 dst->imageData[j*src->width+i] = k;
 }
 
-std::vector <Marker> MarkerFinder::getMarkers(IplImage *img)
+std::vector <Marker> MarkerFinder::getMarkers(IplImage *img, const ColorsStorage* colors_to_find)
 {
+    image_width = img->width;
+    image_height = img->height;
     IplImage* Thresholdimg = cvCreateImage(cvGetSize(img), 8, 1);
     memset(Thresholdimg->imageData,FLAG_EMPTY,Thresholdimg->width*Thresholdimg->height*Thresholdimg->nChannels);
-    inRange(img, etalon_marker_colors, 20 , Thresholdimg);
+    inRange(img, colors_to_find->getColors(), 20 , Thresholdimg);
 
 
     int step = 5;

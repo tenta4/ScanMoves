@@ -3,6 +3,8 @@
 #include "vector"
 #include "opencv/highgui.h"
 #include "opencv/cv.h"
+#include "colorsstorage.h"
+
 struct Marker
 {
     const static int real_size = 800;
@@ -43,12 +45,10 @@ private:
     unsigned int image_width;
     unsigned int image_height;
 
-    std::vector <CvScalar> etalon_marker_colors;
     Marker m;
     void inRange(IplImage* src,std::vector <CvScalar> colors, int range, IplImage* dst);
 public:
-    void setEtalon(const IplImage*, std::vector <CvPoint> init_markers_position);
-    std::vector <Marker> getMarkers(IplImage*);
+    std::vector <Marker> getMarkers(IplImage* image, const ColorsStorage* colors_to_find);
 };
 
 #endif // MARKERFINDER_H
