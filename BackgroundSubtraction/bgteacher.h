@@ -11,10 +11,11 @@ class BGTeacher
     int *middle_bg;
 public:
     int *getMiddle();
-    BGTeacher();
+    BGTeacher(int width, int height);
     ~BGTeacher();
     void push(IplImage *);
     void calc();
+    CvSize getBgSize();
 
 };
 

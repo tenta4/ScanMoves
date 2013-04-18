@@ -44,7 +44,7 @@ int main(int argc, char** argv)
           if (WRITE_TO_FILE != 2)  camera = new WebCam();
           else camera = new WebCamEmul();
 
-          PhysicalExerciseDetector detector;
+          PhysicalExerciseDetector detector(camera->getWidth(),camera->getHeight());
 
 
           /**************************

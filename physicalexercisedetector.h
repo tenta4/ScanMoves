@@ -10,13 +10,15 @@
 
 class PhysicalExerciseDetector
 {
+    int images_width;
+    int images_height;
     IplImage* hsv_tmp_img;
     BGTeacher *bgteacher;
     BGDetector *bgdetector;
     MarkerFinder* marker_finder;
     ColorsStorage* colors_storage;
 public:
-    PhysicalExerciseDetector();
+    PhysicalExerciseDetector(int images_width, int images_height);
     void pushBackGroungImage(const IplImage*);
     void pushEtalonMarkersImage(const IplImage*, std::vector <CvPoint> init_markers_position);
     void pushGameImage(const IplImage*);

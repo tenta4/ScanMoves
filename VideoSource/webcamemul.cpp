@@ -19,10 +19,10 @@ IplImage * WebCamEmul::getFrame()
 }
 int WebCamEmul::getHeight()
 {
-
+    return 480;
 }
 int WebCamEmul::getWidth()
 {
-
+    return 640;
 }
 WebCamEmul::~WebCamEmul(){}
