@@ -14,6 +14,9 @@ void BGTeacher::push(IplImage * input_img)
     IplImage* tmp = cvCreateImage(cvGetSize(input_img), 8, 3);
     cvCopy(input_img,tmp);
     images.push_back(tmp);
+    delete middle_bg;
+    middle_bg = 0;
+
 }
 
 void BGTeacher::calc()

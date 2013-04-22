@@ -28,7 +28,7 @@ void PhysicalExerciseDetector::pushGameImage(const IplImage * input_img)
     if (input_img->width != images_width || input_img->height != images_height)
         throw std::out_of_range("resolution error in PhysicalExerciseDetector");
 
-    if (marker_finder)
+    if (marker_finder && bgteacher->getMiddle())
     {
         cvCvtColor(input_img,hsv_tmp_img, CV_BGR2HSV);
         bgdetector->checkImg(hsv_tmp_img);
