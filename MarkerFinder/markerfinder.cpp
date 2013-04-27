@@ -3,12 +3,10 @@
 
 void MarkerFinder::recursion(int x, int y, uchar* ptr)
 {
-     if ((x>(image_width-1))||x<0||(y>(image_height-1))||y<0||m.size>30000) return;
+    if ((x>(image_width-1))||x<0||(y>(image_height-1))||y<0||m.size>30000) return;
 
-  //   qDebug()<<(ptr[y*w+x]);
     if (ptr[y*image_width+x]==m.id_marker)
     {
-   //     qDebug()<<x<<y<<ptr[y*w+x];
         m.size++;
         if (m.left.x>x)     {   m.left.x=x; m.left.y=y;}
         else if (m.rihgt.x<x){  m.rihgt.x=x;m.rihgt.y=y;}
@@ -49,14 +47,13 @@ std::vector <Marker> MarkerFinder::getMarkers(IplImage *img, const ColorsStorage
     inRange(img, colors_to_find->getColors(), 20 , Thresholdimg);
 
 
-    int step = 5;
+    int step = 4;
     for (int i = 0;i< img->width; i+=step)
         for (int j = 0; j<img->height; j+=step)
         {
 
             uchar * ptr = (uchar*)Thresholdimg->imageData;
             m.size = 0;
-      //      qDebug()<<ptr[j*img->width+i]<<(ptr[j*img->width+i]>200);
 
             if (ptr[j*img->width+i]<FLAG_FULL)
             {

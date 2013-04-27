@@ -1,4 +1,4 @@
-#define MAX_CAM_CADR 10
+#define MAX_CAM_CADR 20
 
 #include ".\VideoSource\webcam.h"
 #include ".\VideoSource\iwebcam.h"
@@ -101,7 +101,7 @@ int main(int argc, char** argv)
 
                 std::vector <CvPoint> init_positions;
                 init_positions.push_back(cvPoint(image->width/2,image->height/2));
-                //init_positions.push_back(cvPoint(image->width/3-50,image->height/2));
+                init_positions.push_back(cvPoint(image->width/3-50,image->height/2));
 
                 detector.pushEtalonMarkersImage(image, init_positions);
 
