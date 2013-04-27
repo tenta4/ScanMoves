@@ -17,6 +17,8 @@ class PhysicalExerciseDetector
     BGDetector *bgdetector;
     MarkerFinder* marker_finder;
     ColorsStorage* colors_storage;
+
+    std::vector <std::vector <Marker> > all_video_markers;
 public:
     PhysicalExerciseDetector(int images_width, int images_height);
     void pushBackGroungImage(const IplImage*);

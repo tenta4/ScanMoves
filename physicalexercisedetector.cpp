@@ -32,7 +32,25 @@ void PhysicalExerciseDetector::pushGameImage(const IplImage * input_img)
     {
         cvCvtColor(input_img,hsv_tmp_img, CV_BGR2HSV);
         bgdetector->checkImg(hsv_tmp_img);
-        marker_finder->getMarkers(hsv_tmp_img, colors_storage);
+        std::vector <Marker> found_markers = marker_finder->getMarkers(hsv_tmp_img, colors_storage);
+        all_video_markers.push_back(found_markers);
+        for (int i = 0 ; i < found_markers.size() ; i++)
+        {
+            Marker m = found_markers.at(i);
+            cvDrawCircle(hsv_tmp_img,m.left,5,cvScalar(128),2);
+            cvDrawCircle(hsv_tmp_img,m.rihgt,5,cvScalar(128),2);
+            cvDrawCircle(hsv_tmp_img,m.top,5,cvScalar(128),2);
+            cvDrawCircle(hsv_tmp_img,m.buttom,5,cvScalar(128),2);
+
+            cvDrawLine(hsv_tmp_img,m.left,m.top,cvScalar(128),2);
+            cvDrawLine(hsv_tmp_img,m.top,m.rihgt,cvScalar(128),2);
+            cvDrawLine(hsv_tmp_img,m.buttom,m.rihgt,cvScalar(128),2);
+            cvDrawLine(hsv_tmp_img,m.left,m.buttom,cvScalar(128),2);
+
+            std::cerr<<"dist"<<m.dist<<"\n";
+
+        }
+        cvShowImage("with markers", hsv_tmp_img);
     }
     else
     {

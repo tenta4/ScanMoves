@@ -40,6 +40,8 @@ void MarkerFinder::inRange(IplImage *src, std::vector <CvScalar> colors, int ran
 
 std::vector <Marker> MarkerFinder::getMarkers(IplImage *img, const ColorsStorage* colors_to_find)
 {
+    std::vector <Marker> found_markers;
+
     image_width = img->width;
     image_height = img->height;
     IplImage* Thresholdimg = cvCreateImage(cvGetSize(img), 8, 1);
@@ -62,29 +64,14 @@ std::vector <Marker> MarkerFinder::getMarkers(IplImage *img, const ColorsStorage
             }
             if (m.size<200) continue;
 
-            cvDrawCircle(img,m.left,5,cvScalar(128),2);
-            cvDrawCircle(img,m.rihgt,5,cvScalar(128),2);
-            cvDrawCircle(img,m.top,5,cvScalar(128),2);
-            cvDrawCircle(img,m.buttom,5,cvScalar(128),2);
+            m.calcDistance();
 
-            cvDrawLine(img,m.left,m.top,cvScalar(128),2);
-            cvDrawLine(img,m.top,m.rihgt,cvScalar(128),2);
-            cvDrawLine(img,m.buttom,m.rihgt,cvScalar(128),2);
-            cvDrawLine(img,m.left,m.buttom,cvScalar(128),2);
-
-
-            std::cerr<<"dist"<<m.calcDistance()<<"\n";
-
-      //      qDebug()<<m.size<<"-----------------";
-      //      qDebug()<<"left"<<m.left.x<<m.left.y<<ptr[m.left.y*img->width+m.left.x];
-         //   while (cvWaitKey(20)<0)cvShowImage("ww",img);
+            found_markers.push_back(m);
         }
 
     cvShowImage("tr",Thresholdimg);
-    cvShowImage("result",img);
-//    qDebug()<<(int)img->imageData[(240*640+320)*3]<<(int)img->imageData[(240*640+320)*3+1]<<(int)img->imageData[(240*640+320)*3+2];
 
     cvReleaseImage(&Thresholdimg);
-    std::vector <Marker> vec;
-    return vec;
+
+    return found_markers;
 }

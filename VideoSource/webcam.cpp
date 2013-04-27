@@ -39,7 +39,6 @@ IplImage * WebCam::getFrame()
     if (mapx)
     {
         IplImage *t = cvCloneImage( image1 );
-        cvShowImage( "mywindow", t );
 
         cvRemap( t, image1, mapx, mapy,CV_INTER_LINEAR | CV_WARP_FILL_OUTLIERS, CV_RGB(255,0,0)); // undistort image
         cvReleaseImage( &t );
