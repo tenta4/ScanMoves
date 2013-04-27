@@ -41,7 +41,7 @@ int main(int argc, char** argv)
 
           IWebCam *camera;
 
-          if (WRITE_TO_FILE != 2)  camera = new WebCam();
+          if (WRITE_TO_FILE != 2)  camera = new WebCam("../distorsion_coeff.xml","../camera_matrix.xml");
           else camera = new WebCamEmul();
 
           PhysicalExerciseDetector detector(camera->getWidth(),camera->getHeight());

@@ -7,8 +7,12 @@ class WebCam :public IWebCam
 {
 private:
     CvCapture* capture;
+    CvMat *camera_matrix;
+    CvMat *dist_coef;
+    IplImage* mapx;
+    IplImage* mapy;
 public:
-    WebCam();
+    WebCam(const char* dist_coeff = 0, const char * camera_matrix = 0);
     IplImage * getFrame();
     int getWidth();
     int getHeight();
