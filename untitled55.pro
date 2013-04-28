@@ -18,7 +18,8 @@ SOURCES += main.cpp \
     BackgroundSubtraction/bgteacher.cpp \
     BackgroundSubtraction/bgdetector.cpp \
     MarkerFinder/markerfinder.cpp \
-    MarkerFinder/colorsstorage.cpp
+    MarkerFinder/colorsstorage.cpp \
+    gamemodule.cpp
 
 HEADERS  += \
     physicalexercisedetector.h \
@@ -28,11 +29,14 @@ HEADERS  += \
     BackgroundSubtraction/bgteacher.h \
     BackgroundSubtraction/bgdetector.h \
     MarkerFinder/markerfinder.h \
-    MarkerFinder/colorsstorage.h
+    MarkerFinder/colorsstorage.h \
+    gamemodule.h
 
 FORMS    +=
 INCLUDEPATH += C:/OpenCV/mingw/install/include
 LIBS += C:/OpenCV/mingw/install/lib/*.a
+
+
 
 
 

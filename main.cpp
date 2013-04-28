@@ -4,7 +4,7 @@
 #include ".\VideoSource\iwebcam.h"
 #include ".\VideoSource\webcamemul.h"
 #include "physicalexercisedetector.h"
-
+#include "gamemodule.h"
 #define WRITE_TO_FILE 0//1-write 2-read
 
 void writeToFile(const IplImage* image)
@@ -35,6 +35,8 @@ void writeToFile(const IplImage* image)
 
 int main(int argc, char** argv)
 {
+            GameModule gm;
+            return 0;
 
           // сздаем окно
           cvNamedWindow( "Motion", 1 );
