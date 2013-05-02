@@ -66,6 +66,8 @@ GameModule::GameModule()
 
 int GameModule::gameMode()
 {
+    QTime time;
+
     for(;;)
     {
           IplImage* image = camera->getFrame();
@@ -75,8 +77,9 @@ int GameModule::gameMode()
               _writeToFile(image);
           }
           //cvShowImage("Motion",image);
+          time.start();
           detector->pushGameImage(image);
-
+          qDebug()<<time.elapsed();
           if( cvWaitKey(1) >= 0 ) break;
 
     }

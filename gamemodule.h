@@ -1,7 +1,7 @@
 #ifndef GAMEMODULE_H
 #define GAMEMODULE_H
 
-#define WRITE_TO_FILE 0
+#define WRITE_TO_FILE 2
 #define MAX_CAM_CADR 10
 #include "opencv/highgui.h"
 #include "vector"
@@ -13,6 +13,9 @@
 #include "VideoSource/webcam.h"
 
 #include "physicalexercisedetector.h"
+
+#include "QTime"
+
 class GameModule
 {
 
