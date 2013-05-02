@@ -51,7 +51,7 @@ void PhysicalExerciseDetector::pushGameImage(const IplImage * input_img)
             std::cerr<<"dist"<<m.dist<<"\n";
 
         }
-        cvShowImage("with markers", hsv_tmp_img);
+        cvShowImage("ScanMoves", hsv_tmp_img);
     }
     else
     {

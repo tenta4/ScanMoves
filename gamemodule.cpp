@@ -74,7 +74,7 @@ int GameModule::gameMode()
           {
               _writeToFile(image);
           }
-          cvShowImage("Motion",image);
+          //cvShowImage("Motion",image);
           detector->pushGameImage(image);
 
           if( cvWaitKey(1) >= 0 ) break;
@@ -115,7 +115,7 @@ void GameModule::adaptationMode()
           }
 
           std::vector <CvPoint> init_positions;
-          init_positions.push_back(cvPoint(image->width/2,image->height/2));
+          //init_positions.push_back(cvPoint(image->width/2,image->height/2));
           init_positions.push_back(cvPoint(image->width/3-50,image->height/2));
 
           detector->pushEtalonMarkersImage(image, init_positions);

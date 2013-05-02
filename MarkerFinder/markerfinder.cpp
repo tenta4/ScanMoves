@@ -69,7 +69,7 @@ std::vector <Marker> MarkerFinder::getMarkers(IplImage *img, const ColorsStorage
             found_markers.push_back(m);
         }
 
-    cvShowImage("tr",Thresholdimg);
+    //cvShowImage("tr",Thresholdimg);
 
     cvReleaseImage(&Thresholdimg);
 
