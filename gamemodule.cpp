@@ -68,6 +68,8 @@ int GameModule::gameMode()
 {
     QTime time;
 
+    int sum = 0;
+    int count = 0;
     for(;;)
     {
           IplImage* image = camera->getFrame();
@@ -79,7 +81,13 @@ int GameModule::gameMode()
           //cvShowImage("Motion",image);
           time.start();
           detector->pushGameImage(image);
-          qDebug()<<time.elapsed();
+          int timer_value = time.elapsed();
+          qDebug()<<timer_value;
+          sum += timer_value;
+          count ++ ;
+          qDebug()<<"middle"<<sum/count;
+
+
           if( cvWaitKey(1) >= 0 ) break;
 
     }
@@ -118,7 +126,7 @@ void GameModule::adaptationMode()
           }
 
           std::vector <CvPoint> init_positions;
-          //init_positions.push_back(cvPoint(image->width/2,image->height/2));
+          init_positions.push_back(cvPoint(image->width/2,image->height/2));
           init_positions.push_back(cvPoint(image->width/3-50,image->height/2));
 
           detector->pushEtalonMarkersImage(image, init_positions);

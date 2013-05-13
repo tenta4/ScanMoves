@@ -14,34 +14,46 @@ BGDetector::BGDetector(BGTeacher* bgt, int t, int sq) : threshold(t)
 
 void BGDetector::checkImg(IplImage * image)
 {
-    int i,j,j1;
-    uchar* ptr;
+    int i,j ;
 
 //    if (bgteacher->getBgSize().width != image->width || bgteacher->getBgSize().height != image->height)
 //        throw std::out_of_range("resolutions between bg image and input image are not equal");
 
-    ptr = (uchar*) (image->imageData);
+    uchar* ptr = (uchar*) (image->imageData);
+
+    const int* middle_background = bgteacher->getMiddle();
+
     for( i=0 ; i < image->height ; i += square)
           for( j=0 ; j < image->width ; j += square)
           {
                 int sum=0;
 
                 for (int ii=0;ii<square;ii++)
+                {
                     for (int jj=0;jj<square;jj++)
                     {
-                        sum+=(abs(bgteacher->getMiddle()[((i+ii)*image->width+j+jj)*3+0]-ptr[(j+jj)*3+(i+ii)*image->widthStep+0]));
-                        sum+=(abs(bgteacher->getMiddle()[((i+ii)*image->width+j+jj)*3+1]-ptr[(j+jj)*3+(i+ii)*image->widthStep+1])/3);
-                        sum+=(abs(bgteacher->getMiddle()[((i+ii)*image->width+j+jj)*3+2]-ptr[(j+jj)*3+(i+ii)*image->widthStep+2])/3);
+                        int pos = ( (i + ii) * image->width + j + jj ) * image->nChannels ;
+
+                        sum+=( abs(middle_background[ pos     ]  - ptr[ pos     ])    );
+                        sum+=( abs(middle_background[ pos + 1 ]  - ptr[ pos + 1 ]) / 3);
+                        sum+=( abs(middle_background[ pos + 2 ]  - ptr[ pos + 2 ]) / 3);
 
                     }
-                if (sum<=threshold*square*square)
+                }
 
-                for (int ii=0;ii<square;ii++)
-                    for (int jj=0;jj<square;jj++)
-                        for(j1=0;j1<3;j1++){
-                             if (j1==1) ptr[(j+jj)*3+(i+ii)*image->widthStep+j1]=0;
-                             else ptr[(j+jj)*3+(i+ii)*image->widthStep+j1]=0;
+                if (sum<=threshold * square * square)
+                {
+                    for (int ii=0;ii<square;ii++)
+                        for (int jj=0;jj<square;jj++)
+                        {
+
+                            int pos = ( (i + ii) * image->width + j + jj ) * image->nChannels ;
+
+                            ptr[ pos     ]=0;
+                            ptr[ pos + 1 ]=0;
+                            ptr[ pos + 2 ]=0;
                         }
+                 }
           }
 
 }

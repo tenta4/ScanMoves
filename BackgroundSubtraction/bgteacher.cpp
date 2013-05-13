@@ -54,7 +54,7 @@ void BGTeacher::calc()
     images.clear();
 }
 
-int* BGTeacher::getMiddle()
+const int* BGTeacher::getMiddle()
 {
     return middle_bg;
 }

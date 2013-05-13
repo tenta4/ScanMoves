@@ -24,7 +24,7 @@ class GameModule
     int gameMode();
     IWebCam *camera;
     PhysicalExerciseDetector* detector;
-    int waitingWND(const char*, bool is_show_timer = true, int delay = 30);
+    int waitingWND(const char*, bool is_show_timer = true, int delay = 60);
 public:
     GameModule();
     ~GameModule();
