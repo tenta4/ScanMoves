@@ -45,10 +45,13 @@ private:
     unsigned int image_width;
     unsigned int image_height;
 
+    IplImage* tmp_graystyle_image;
     Marker m;
     void inRange(IplImage* src,std::vector <CvScalar> colors, int range, IplImage* dst);
 public:
     std::vector <Marker> getMarkers(IplImage* image, const ColorsStorage* colors_to_find);
+    MarkerFinder(CvSize image_size);
+    ~MarkerFinder();
 };
 
 #endif // MARKERFINDER_H

@@ -1,6 +1,14 @@
 #include "markerfinder.h"
 #include "QDebug"
 
+MarkerFinder::MarkerFinder(CvSize size)
+{
+    tmp_graystyle_image = cvCreateImage(size, 8, 1);
+    image_width  = size.width;
+    image_height = size.height;
+
+}
+
 void MarkerFinder::recursion(int x, int y, uchar* ptr)
 {
     if ((x>(image_width-1))||x<0||(y>(image_height-1))||y<0||m.size>30000) return;
@@ -24,29 +32,33 @@ void MarkerFinder::recursion(int x, int y, uchar* ptr)
 
 void MarkerFinder::inRange(IplImage *src, std::vector <CvScalar> colors, int range, IplImage *dst)
 {
-    if (dst->nChannels != 1 || src->width != dst->width || src->height != dst->height) throw cv::Exception();
+
     unsigned char *p_img = (unsigned char*)src->imageData;
-    int w = src->width;
-    int h = src->height;
+
     int imul = 3 ;
-    for (int i = 0; i < w ; i++)
-        for (int j = 0 ; j< h ; j++)
+    for (int j = 0 ; j< image_height ; j++)
+    {
+        int pos = j * image_width ;
+
+        for (int i = 0; i < image_width ; i++)
+        {
+            int pos_lvl2 = ( pos + i ) * 3;
             for (int k = 0 ; k< colors.size() ; k++)
-            if (p_img[(j*src->width+i)*3]   > (colors.at(k).val[0]- range)   && p_img[(j*src->width+i)*3]   < (colors.at(k).val[0]+ range))
-            if (p_img[(j*src->width+i)*3+1] > (colors.at(k).val[1]- range*imul) && p_img[(j*src->width+i)*3+1] < (colors.at(k).val[1]+ range*imul))
-            if (p_img[(j*src->width+i)*3+2] > (colors.at(k).val[2]- range*imul) && p_img[(j*src->width+i)*3+2] < (colors.at(k).val[2]+ range*imul))
-                dst->imageData[j*src->width+i] = k;
+            if (p_img[pos_lvl2    ] > (colors.at(k).val[0]- range)      && p_img[ pos_lvl2   ] < (colors.at(k).val[0]+ range))
+            if (p_img[pos_lvl2 + 1] > (colors.at(k).val[1]- range*imul) && p_img[ pos_lvl2 +1] < (colors.at(k).val[1]+ range*imul))
+            if (p_img[pos_lvl2 + 2] > (colors.at(k).val[2]- range*imul) && p_img[ pos_lvl2 +2] < (colors.at(k).val[2]+ range*imul))
+                dst->imageData[ pos + i ] = k;
+        }
+    }
 }
 
 std::vector <Marker> MarkerFinder::getMarkers(IplImage *img, const ColorsStorage* colors_to_find)
 {
+
     std::vector <Marker> found_markers;
 
-    image_width = img->width;
-    image_height = img->height;
-    IplImage* Thresholdimg = cvCreateImage(cvGetSize(img), 8, 1);
-    memset(Thresholdimg->imageData,FLAG_EMPTY,Thresholdimg->width*Thresholdimg->height*Thresholdimg->nChannels);
-    inRange(img, colors_to_find->getColors(), 20 , Thresholdimg);
+    memset(tmp_graystyle_image->imageData,FLAG_EMPTY, image_width * image_height );
+    inRange(img, colors_to_find->getColors(), 20 , tmp_graystyle_image);
 
 
     int step = 4;
@@ -54,7 +66,7 @@ std::vector <Marker> MarkerFinder::getMarkers(IplImage *img, const ColorsStorage
         for (int j = 0; j<img->height; j+=step)
         {
 
-            uchar * ptr = (uchar*)Thresholdimg->imageData;
+            uchar * ptr = (uchar*)tmp_graystyle_image->imageData;
             m.size = 0;
 
             if (ptr[j*img->width+i]<FLAG_FULL)
@@ -71,7 +83,11 @@ std::vector <Marker> MarkerFinder::getMarkers(IplImage *img, const ColorsStorage
 
     //cvShowImage("tr",Thresholdimg);
 
-    cvReleaseImage(&Thresholdimg);
-
     return found_markers;
+}
+
+MarkerFinder::~MarkerFinder()
+{
+    cvReleaseImage(&tmp_graystyle_image);
+
 }

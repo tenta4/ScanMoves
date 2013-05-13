@@ -58,7 +58,7 @@ void PhysicalExerciseDetector::pushGameImage(const IplImage * input_img)
         bgteacher->calc();
         delete bgdetector;
         bgdetector = new BGDetector(bgteacher, 40, 8);
-        marker_finder = new MarkerFinder();
+        marker_finder = new MarkerFinder(cvSize(images_width, images_height));
     }
 }
 PhysicalExerciseDetector::~PhysicalExerciseDetector()

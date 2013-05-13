@@ -26,7 +26,7 @@ void BGDetector::checkImg(IplImage * image)
     for( i=0 ; i < image->height ; i += square)
           for( j=0 ; j < image->width ; j += square)
           {
-                int sum=0;
+                int sum = 0;
 
                 for (int ii=0;ii<square;ii++)
                 {
