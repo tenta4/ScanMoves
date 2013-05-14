@@ -115,7 +115,7 @@ void GameModule::adaptationMode()
     }
     waitingWND("Go to screen");
 
-    for(int i=0;i<MAX_CAM_CADR*4;i++)
+    for(int i=0;i<MAX_CAM_CADR*6;i++)
     {
 
           IplImage* image = camera->getFrame();

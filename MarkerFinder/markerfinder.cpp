@@ -9,24 +9,75 @@ MarkerFinder::MarkerFinder(CvSize size)
 
 }
 
-void MarkerFinder::recursion(int x, int y, uchar* ptr)
+void MarkerFinder::recursion(int x, int y, uchar* ptr, FROM_WHERE_COME_IN from_where)
 {
     if ((x>(image_width-1))||x<0||(y>(image_height-1))||y<0||m.size>30000) return;
 
     if (ptr[y*image_width+x]==m.id_marker)
     {
         m.size++;
-        if (m.left.x>x)     {   m.left.x=x; m.left.y=y;}
-        else if (m.rihgt.x<x){  m.rihgt.x=x;m.rihgt.y=y;}
-        else if (m.top.y>y) {   m.top.y=y;  m.top.x=x;}
-        else if (m.buttom.y<y){ m.buttom.y=y;m.buttom.x=x;}
 
-        ptr[y*image_width+x]= FLAG_FULL;
+        switch (from_where)
+        {
+            case FROM_LEFT :
+            {
+                if ( m.rihgt.x < x )    { m.rihgt.x = x;   m.rihgt.y = y;}
 
-        recursion(x+1,y,ptr);
-        recursion(x-1,y,ptr);
-        recursion(x,y+1,ptr);
-        recursion(x,y-1,ptr);
+                ptr[y*image_width+x]= FLAG_FULL;
+
+                recursion(x + 1 , y     , ptr , FROM_LEFT);
+                recursion(x     , y + 1 , ptr , FROM_TOP);
+                recursion(x     , y - 1 , ptr , FROM_BOTTOM);
+                break;
+            }
+            case FROM_RIGHT :
+            {
+                if ( m.left.x > x )     { m.left.x = x;     m.left.y = y;}
+
+                ptr[y*image_width+x]= FLAG_FULL;
+
+                recursion(x - 1 , y     ,ptr, FROM_RIGHT);
+                recursion(x     , y + 1 ,ptr, FROM_TOP);
+                recursion(x     , y - 1 ,ptr, FROM_BOTTOM);
+                break;
+            }
+            case FROM_TOP :
+            {
+                if ( m.buttom.y < y )   { m.buttom.y = y;   m.buttom.x = x;}
+
+                ptr[y*image_width+x]= FLAG_FULL;
+
+                recursion(x + 1 , y     ,ptr, FROM_LEFT);
+                recursion(x - 1 , y     ,ptr, FROM_RIGHT);
+                recursion(x     , y + 1 ,ptr, FROM_TOP);
+                break;
+            }
+            case FROM_BOTTOM :
+            {
+                if (m.top.y > y)        { m.top.y = y;      m.top.x = x;}
+
+                ptr[y*image_width+x]= FLAG_FULL;
+
+                recursion(x + 1 , y     ,ptr, FROM_LEFT);
+                recursion(x - 1 , y     ,ptr, FROM_RIGHT);
+                recursion(x     , y - 1 ,ptr, FROM_BOTTOM);
+                break;
+            }
+            case FROM_CENTER :
+            {
+                m.top.y     = y; m.top.x    = x;
+                m.buttom.y  = y; m.buttom.x = x;
+                m.left.y    = y; m.rihgt.x  = x;
+                m.rihgt.y   = y; m.left.x   = x;
+
+                ptr[y*image_width+x]= FLAG_FULL;
+
+                recursion(x+1,y,ptr, FROM_LEFT);
+                recursion(x-1,y,ptr, FROM_RIGHT);
+                recursion(x,y+1,ptr, FROM_TOP);
+                recursion(x,y-1,ptr, FROM_BOTTOM);
+            }
+        }
     }
 }
 
@@ -72,7 +123,7 @@ std::vector <Marker> MarkerFinder::getMarkers(IplImage *img, const ColorsStorage
             if (ptr[j*img->width+i]<FLAG_FULL)
             {
                 m = Marker(ptr[j*img->width+i]);
-                recursion(i,j,ptr);
+                recursion(i,j,ptr, FROM_CENTER);
             }
             if (m.size<200) continue;
 

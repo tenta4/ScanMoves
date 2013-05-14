@@ -40,8 +40,9 @@ struct Marker
 class MarkerFinder
 {
 private:
+    enum FROM_WHERE_COME_IN { FROM_LEFT , FROM_RIGHT , FROM_TOP , FROM_BOTTOM , FROM_CENTER };
     enum FLAGS{FLAG_EMPTY = 255 , FLAG_FULL = 128};
-    void recursion(int x, int y, uchar* ptr);
+    void recursion(int x, int y, uchar* ptr, FROM_WHERE_COME_IN);
     unsigned int image_width;
     unsigned int image_height;
 
