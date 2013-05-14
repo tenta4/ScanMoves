@@ -4,7 +4,7 @@ WebCam::WebCam(const char* dist_coeff_path, const char * camera_matrix_path)
 {
     capture = 0;
     capture = cvCaptureFromCAM(0 );
-    if (!capture) throw ErrorOpenCamera();
+    if (!capture) throw std::out_of_range("open camera error");
 
     size.height = cvGetCaptureProperty(capture,CV_CAP_PROP_FRAME_HEIGHT);
     size.width = cvGetCaptureProperty(capture,CV_CAP_PROP_FRAME_WIDTH);
@@ -33,7 +33,7 @@ WebCam::WebCam(const char* dist_coeff_path, const char * camera_matrix_path)
 IplImage * WebCam::getFrame()
 {
     if( !cvGrabFrame( capture ))
-        throw ErrorGrabFrame();
+        throw std::out_of_range("frame grabbing error");
     IplImage* image1 = cvRetrieveFrame( capture );
 
     if (mapx)

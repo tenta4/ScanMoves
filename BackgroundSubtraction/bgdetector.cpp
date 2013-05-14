@@ -14,10 +14,12 @@ BGDetector::BGDetector(BGTeacher* bgt, int t, int sq) : threshold(t)
 
 void BGDetector::checkImg(IplImage * image)
 {
-    int i,j ;
-
 //    if (bgteacher->getBgSize().width != image->width || bgteacher->getBgSize().height != image->height)
 //        throw std::out_of_range("resolutions between bg image and input image are not equal");
+
+    int i,j ;
+
+    int square_threshold = threshold * square * square;
 
     uchar* ptr = (uchar*) (image->imageData);
 
@@ -35,13 +37,13 @@ void BGDetector::checkImg(IplImage * image)
                         int pos = ( (i + ii) * image->width + j + jj ) * image->nChannels ;
 
                         sum+=( abs(middle_background[ pos     ]  - ptr[ pos     ])    );
-                        sum+=( abs(middle_background[ pos + 1 ]  - ptr[ pos + 1 ]) / 3);
-                        sum+=( abs(middle_background[ pos + 2 ]  - ptr[ pos + 2 ]) / 3);
+                        sum+=( abs(middle_background[ pos + 1 ]  - ptr[ pos + 1 ]) >> 2);
+                        sum+=( abs(middle_background[ pos + 2 ]  - ptr[ pos + 2 ]) >> 2);
 
                     }
                 }
 
-                if (sum<=threshold * square * square)
+                if (sum <= square_threshold)
                 {
                     for (int ii=0;ii<square;ii++)
                         for (int jj=0;jj<square;jj++)

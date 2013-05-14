@@ -1,14 +1,14 @@
 #ifndef IWEBCAM_H
 #define IWEBCAM_H
 #include "opencv/highgui.h"
+#include <stdexcept>
+
 class IWebCam
 {
 protected:
     CvSize size;
 
 public:
-    class ErrorOpenCamera{};
-    class ErrorGrabFrame{};
     IWebCam();
     virtual IplImage * getFrame() = 0;
     virtual int getWidth() = 0;
