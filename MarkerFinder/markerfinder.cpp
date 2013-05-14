@@ -13,7 +13,9 @@ void MarkerFinder::recursion(int x, int y, uchar* ptr, FROM_WHERE_COME_IN from_w
 {
     if ((x>(image_width-1))||x<0||(y>(image_height-1))||y<0||m.size>30000) return;
 
-    if (ptr[y*image_width+x]==m.id_marker)
+    int position = y*image_width+x;
+
+    if (ptr[ position ]==m.id_marker)
     {
         m.size++;
 
@@ -23,7 +25,7 @@ void MarkerFinder::recursion(int x, int y, uchar* ptr, FROM_WHERE_COME_IN from_w
             {
                 if ( m.rihgt.x < x )    { m.rihgt.x = x;   m.rihgt.y = y;}
 
-                ptr[y*image_width+x]= FLAG_FULL;
+                ptr[ position ]= FLAG_FULL;
 
                 recursion(x + 1 , y     , ptr , FROM_LEFT);
                 recursion(x     , y + 1 , ptr , FROM_TOP);
@@ -34,7 +36,7 @@ void MarkerFinder::recursion(int x, int y, uchar* ptr, FROM_WHERE_COME_IN from_w
             {
                 if ( m.left.x > x )     { m.left.x = x;     m.left.y = y;}
 
-                ptr[y*image_width+x]= FLAG_FULL;
+                ptr[ position]= FLAG_FULL;
 
                 recursion(x - 1 , y     ,ptr, FROM_RIGHT);
                 recursion(x     , y + 1 ,ptr, FROM_TOP);
@@ -45,7 +47,7 @@ void MarkerFinder::recursion(int x, int y, uchar* ptr, FROM_WHERE_COME_IN from_w
             {
                 if ( m.buttom.y < y )   { m.buttom.y = y;   m.buttom.x = x;}
 
-                ptr[y*image_width+x]= FLAG_FULL;
+                ptr[ position ]= FLAG_FULL;
 
                 recursion(x + 1 , y     ,ptr, FROM_LEFT);
                 recursion(x - 1 , y     ,ptr, FROM_RIGHT);
@@ -56,7 +58,7 @@ void MarkerFinder::recursion(int x, int y, uchar* ptr, FROM_WHERE_COME_IN from_w
             {
                 if (m.top.y > y)        { m.top.y = y;      m.top.x = x;}
 
-                ptr[y*image_width+x]= FLAG_FULL;
+                ptr[ position ]= FLAG_FULL;
 
                 recursion(x + 1 , y     ,ptr, FROM_LEFT);
                 recursion(x - 1 , y     ,ptr, FROM_RIGHT);
@@ -70,16 +72,16 @@ void MarkerFinder::recursion(int x, int y, uchar* ptr, FROM_WHERE_COME_IN from_w
                 m.left.y    = y; m.rihgt.x  = x;
                 m.rihgt.y   = y; m.left.x   = x;
 
-                ptr[y*image_width+x]= FLAG_FULL;
+                ptr[ position ]= FLAG_FULL;
 
                 recursion(x+1,y,ptr, FROM_LEFT);
                 recursion(x-1,y,ptr, FROM_RIGHT);
                 recursion(x,y+1,ptr, FROM_TOP);
                 recursion(x,y-1,ptr, FROM_BOTTOM);
             }
-        }
-    }
-}
+        }   // end switch
+    }       // end if marker color found
+}           // end function
 
 void MarkerFinder::inRange(IplImage *src, std::vector <CvScalar> colors, int range, IplImage *dst)
 {
@@ -109,8 +111,8 @@ std::vector <Marker> MarkerFinder::getMarkers(IplImage *img, const ColorsStorage
     std::vector <Marker> found_markers;
 
     memset(tmp_graystyle_image->imageData,FLAG_EMPTY, image_width * image_height );
-    inRange(img, colors_to_find->getColors(), 20 , tmp_graystyle_image);
 
+    inRange(img, colors_to_find->getColors(), 20 , tmp_graystyle_image);
 
     int step = 8;
     for (int i = 0;i< img->width; i+=step)
@@ -132,7 +134,7 @@ std::vector <Marker> MarkerFinder::getMarkers(IplImage *img, const ColorsStorage
             found_markers.push_back(m);
         }
 
-    //cvShowImage("tr",Thresholdimg);
+    //cvShowImage("tr",tmp_graystyle_image);
 
     return found_markers;
 }
