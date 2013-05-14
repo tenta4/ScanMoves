@@ -61,7 +61,7 @@ std::vector <Marker> MarkerFinder::getMarkers(IplImage *img, const ColorsStorage
     inRange(img, colors_to_find->getColors(), 20 , tmp_graystyle_image);
 
 
-    int step = 4;
+    int step = 8;
     for (int i = 0;i< img->width; i+=step)
         for (int j = 0; j<img->height; j+=step)
         {

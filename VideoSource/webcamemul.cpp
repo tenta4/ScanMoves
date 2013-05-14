@@ -15,8 +15,12 @@ IplImage * WebCamEmul::getFrame()
 
     if (pFile == NULL)
     {
-        if ( count_frames_i == 0 )throw std::out_of_range("error grab frame");
-        else count_frames_i =  0;
+        if ( count_frames_i )
+        {
+            count_frames_i =  0;
+            return getFrame();
+        }
+        else throw std::out_of_range("error grab frame");
     }
     fread(image->imageData,image->width*image->height*image->nChannels,1, pFile);
     fclose(pFile);
