@@ -3,11 +3,11 @@
 WebCamEmul::WebCamEmul()
 {
     count_frames_i = 0;
+    tmp_image = cvCreateImage(cvSize(640,480),8,3);
 
 }
 IplImage * WebCamEmul::getFrame()
 {
-    IplImage * image = cvCreateImage(cvSize(640,480),8,3);
     sprintf(count_frames_c,"%d.bin",count_frames_i);
 
     FILE * pFile;
@@ -23,12 +23,12 @@ IplImage * WebCamEmul::getFrame()
         else throw std::out_of_range("error grab frame");
     }
 
-    fread(image->imageData,image->width*image->height*image->nChannels,1, pFile);
+    fread(tmp_image->imageData,tmp_image->width*tmp_image->height*tmp_image->nChannels,1, pFile);
     fclose(pFile);
 
     count_frames_i++;
 
-    return image;
+    return tmp_image;
 }
 int WebCamEmul::getHeight()
 {
@@ -38,4 +38,7 @@ int WebCamEmul::getWidth()
 {
     return 640;
 }
-WebCamEmul::~WebCamEmul(){}
+WebCamEmul::~WebCamEmul()
+{
+    cvReleaseImage(&tmp_image);
+}

@@ -6,7 +6,7 @@ class WebCamEmul : public IWebCam
 {
     int count_frames_i;
     char count_frames_c[9];
-
+    IplImage* tmp_image;
 public:
     WebCamEmul();
     IplImage * getFrame();
