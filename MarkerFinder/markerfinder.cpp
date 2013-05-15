@@ -83,7 +83,7 @@ void MarkerFinder::recursion(int x, int y, uchar* ptr, FROM_WHERE_COME_IN from_w
     }       // end if marker color found
 }           // end function
 
-void MarkerFinder::inRange(IplImage *src, std::vector <CvScalar> colors, int range, IplImage *dst)
+void MarkerFinder::inRange(IplImage *src, std::vector <ColorsTrasholds> colors, IplImage *dst)
 {
 
     unsigned char *p_img = (unsigned char*)src->imageData;
@@ -97,9 +97,9 @@ void MarkerFinder::inRange(IplImage *src, std::vector <CvScalar> colors, int ran
         {
             int pos_lvl2 = ( pos + i ) * 3;
             for (int k = 0 ; k< colors.size() ; k++)
-            if (p_img[pos_lvl2    ] > (colors.at(k).val[0]- range)      && p_img[ pos_lvl2   ] < (colors.at(k).val[0]+ range))
-            if (p_img[pos_lvl2 + 1] > (colors.at(k).val[1]- range*imul) && p_img[ pos_lvl2 +1] < (colors.at(k).val[1]+ range*imul))
-            if (p_img[pos_lvl2 + 2] > (colors.at(k).val[2]- range*imul) && p_img[ pos_lvl2 +2] < (colors.at(k).val[2]+ range*imul))
+            if (p_img[pos_lvl2    ] > colors.at(k).h_bottom && p_img[ pos_lvl2   ] < (colors.at(k).h_top))
+            if (p_img[pos_lvl2 + 1] > colors.at(k).s_bottom && p_img[ pos_lvl2 +1] < (colors.at(k).s_top))
+            if (p_img[pos_lvl2 + 2] > colors.at(k).v_bottom && p_img[ pos_lvl2 +2] < (colors.at(k).v_top))
                 dst->imageData[ pos + i ] = k;
         }
     }
@@ -112,7 +112,7 @@ std::vector <Marker> MarkerFinder::getMarkers(IplImage *img, const ColorsStorage
 
     memset(tmp_graystyle_image->imageData,FLAG_EMPTY, image_width * image_height );
 
-    inRange(img, colors_to_find->getColors(), 20 , tmp_graystyle_image);
+    inRange(img, colors_to_find->getColors() , tmp_graystyle_image);
 
     int step = 8;
     for (int i = 0;i< img->width; i+=step)

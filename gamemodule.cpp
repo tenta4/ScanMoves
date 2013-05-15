@@ -108,7 +108,7 @@ void GameModule::adaptationMode()
 
           cvShowImage( "ScanMoves", image);
 
-          //cvReleaseImage(&image);
+          cvReleaseImage(&image);
 
           cvWaitKey(20);
 
@@ -141,6 +141,8 @@ void GameModule::adaptationMode()
           cvWaitKey(20);
 
           cvShowImage( "ScanMoves", image);
+          cvReleaseImage(&image);
+
 
     }
     waitingWND("Adaptation finished", false);
@@ -168,6 +170,8 @@ int GameModule::waitingWND(const char* _text, bool is_timer, int delay)
         cvPutText( image, _text, cvPoint(4,150+120), &font, CV_RGB(0,255, 250) );
         cvShowImage("ScanMoves",image);
         cvWaitKey(1);
+        cvReleaseImage(&image);
+
     }
 }
 

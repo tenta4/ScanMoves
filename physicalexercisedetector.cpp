@@ -8,7 +8,7 @@ PhysicalExerciseDetector::PhysicalExerciseDetector(int w, int h)
     marker_finder  = 0;
     bgdetector     = 0;
     bgteacher      = new BGTeacher(w, h);
-    colors_storage = new ColorsStorage();
+    colors_storage = new ColorsStorage(20, 60, 60);
     hsv_tmp_img    = cvCreateImage(cvSize(640,480),8,3);
 
 }
