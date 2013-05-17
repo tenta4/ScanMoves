@@ -13,9 +13,9 @@ void MarkerFinder::recursion(int x, int y, uchar* ptr, FROM_WHERE_COME_IN from_w
 {
     if ((x>(image_width-1))||x<0||(y>(image_height-1))||y<0||m.size>30000) return;
 
-    int position = y*image_width+x;
+    uchar* pcurrent_cell = ptr + y * image_width + x;
 
-    if (ptr[ position ]==m.id_marker)
+    if (*pcurrent_cell == m.id_marker)
     {
         m.size++;
 
@@ -25,7 +25,7 @@ void MarkerFinder::recursion(int x, int y, uchar* ptr, FROM_WHERE_COME_IN from_w
             {
                 if ( m.rihgt.x < x )    { m.rihgt.x = x;   m.rihgt.y = y;}
 
-                ptr[ position ]= FLAG_FULL;
+                *pcurrent_cell = FLAG_FULL;
 
                 recursion(x + 1 , y     , ptr , FROM_LEFT);
                 recursion(x     , y + 1 , ptr , FROM_TOP);
@@ -36,7 +36,7 @@ void MarkerFinder::recursion(int x, int y, uchar* ptr, FROM_WHERE_COME_IN from_w
             {
                 if ( m.left.x > x )     { m.left.x = x;     m.left.y = y;}
 
-                ptr[ position]= FLAG_FULL;
+                *pcurrent_cell = FLAG_FULL;
 
                 recursion(x - 1 , y     ,ptr, FROM_RIGHT);
                 recursion(x     , y + 1 ,ptr, FROM_TOP);
@@ -47,7 +47,7 @@ void MarkerFinder::recursion(int x, int y, uchar* ptr, FROM_WHERE_COME_IN from_w
             {
                 if ( m.buttom.y < y )   { m.buttom.y = y;   m.buttom.x = x;}
 
-                ptr[ position ]= FLAG_FULL;
+                *pcurrent_cell = FLAG_FULL;
 
                 recursion(x + 1 , y     ,ptr, FROM_LEFT);
                 recursion(x - 1 , y     ,ptr, FROM_RIGHT);
@@ -58,7 +58,7 @@ void MarkerFinder::recursion(int x, int y, uchar* ptr, FROM_WHERE_COME_IN from_w
             {
                 if (m.top.y > y)        { m.top.y = y;      m.top.x = x;}
 
-                ptr[ position ]= FLAG_FULL;
+                *pcurrent_cell = FLAG_FULL;
 
                 recursion(x + 1 , y     ,ptr, FROM_LEFT);
                 recursion(x - 1 , y     ,ptr, FROM_RIGHT);
@@ -72,7 +72,7 @@ void MarkerFinder::recursion(int x, int y, uchar* ptr, FROM_WHERE_COME_IN from_w
                 m.left.y    = y; m.rihgt.x  = x;
                 m.rihgt.y   = y; m.left.x   = x;
 
-                ptr[ position ]= FLAG_FULL;
+                *pcurrent_cell = FLAG_FULL;
 
                 recursion(x+1,y,ptr, FROM_LEFT);
                 recursion(x-1,y,ptr, FROM_RIGHT);
