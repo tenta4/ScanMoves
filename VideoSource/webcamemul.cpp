@@ -17,7 +17,7 @@ IplImage * WebCamEmul::getFrame()
     {
         if ( count_frames_i )
         {
-            count_frames_i =  0;
+            count_frames_i =  260;
             return getFrame();
         }
         else throw std::out_of_range("error grab frame");

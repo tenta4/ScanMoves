@@ -86,9 +86,10 @@ void MarkerFinder::recursion(int x, int y, uchar* ptr, FROM_WHERE_COME_IN from_w
 void MarkerFinder::inRange(IplImage *src, std::vector <ColorsTrasholds> colors, IplImage *dst)
 {
 
-    unsigned char *p_img = (unsigned char*)src->imageData;
+    uchar *p_img = (unsigned char*)src->imageData;
 
-    int imul = 3 ;
+    uchar hval, sval, vval;
+
     for (int j = 0 ; j< image_height ; j++)
     {
         int pos = j * image_width ;
@@ -96,11 +97,22 @@ void MarkerFinder::inRange(IplImage *src, std::vector <ColorsTrasholds> colors, 
         for (int i = 0; i < image_width ; i++)
         {
             int pos_lvl2 = ( pos + i ) * 3;
+
+
+            vval = p_img[pos_lvl2+2];
+            if (!vval) continue;   // if cell is white (bgcolor)
+
+            hval = p_img[pos_lvl2  ];
+            sval = p_img[pos_lvl2+1];
+
             for (int k = 0 ; k< colors.size() ; k++)
-            if (p_img[pos_lvl2    ] > colors.at(k).h_bottom && p_img[ pos_lvl2   ] < (colors.at(k).h_top))
-            if (p_img[pos_lvl2 + 1] > colors.at(k).s_bottom && p_img[ pos_lvl2 +1] < (colors.at(k).s_top))
-            if (p_img[pos_lvl2 + 2] > colors.at(k).v_bottom && p_img[ pos_lvl2 +2] < (colors.at(k).v_top))
+            if (hval > colors.at(k).h_bottom && hval < (colors.at(k).h_top))
+            if (sval > colors.at(k).s_bottom && sval < (colors.at(k).s_top))
+            if (vval > colors.at(k).v_bottom && vval < (colors.at(k).v_top))
+            {
                 dst->imageData[ pos + i ] = k;
+                break;
+            }
         }
     }
 }
