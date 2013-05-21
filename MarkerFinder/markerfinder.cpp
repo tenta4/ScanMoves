@@ -11,13 +11,13 @@ MarkerFinder::MarkerFinder(CvSize size)
 
 void MarkerFinder::recursion(int x, int y, uchar* ptr, FROM_WHERE_COME_IN from_where)
 {
-    if ((x>(image_width-1))||x<0||(y>(image_height-1))||y<0||m.size>30000) return;
+    if ((x>(image_width-1))||x<0||(y>(image_height-1))||y<0||m.acreage>30000) return;
 
     uchar* pcurrent_cell = ptr + y * image_width + x;
 
     if (*pcurrent_cell == m.id_marker)
     {
-        m.size++;
+        m.acreage++;
 
         switch (from_where)
         {
@@ -132,16 +132,14 @@ std::vector <Marker> MarkerFinder::getMarkers(IplImage *img, const ColorsStorage
         {
 
             uchar * ptr = (uchar*)tmp_graystyle_image->imageData;
-            m.size = 0;
+            m.acreage = 0;
 
             if (ptr[j*img->width+i]<FLAG_FULL)
             {
                 m = Marker(ptr[j*img->width+i]);
                 recursion(i,j,ptr, FROM_CENTER);
             }
-            if (m.size<200) continue;
-
-            m.calcDistance();
+            if (m.acreage < 200) continue;
 
             found_markers.push_back(m);
         }

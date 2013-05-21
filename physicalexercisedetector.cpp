@@ -48,8 +48,6 @@ void PhysicalExerciseDetector::pushGameImage(const IplImage * input_img)
             cvDrawLine  (hsv_tmp_img,m.buttom,  m.rihgt,    cvScalar(128),2);
             cvDrawLine  (hsv_tmp_img,m.left,    m.buttom,   cvScalar(128),2);
 
-            std::cerr<<"dist"<<m.dist<<"\n";
-
         }
         cvShowImage("ScanMoves", hsv_tmp_img);
     }
