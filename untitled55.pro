@@ -20,7 +20,9 @@ SOURCES += main.cpp \
     MarkerFinder/markerfinder.cpp \
     MarkerFinder/colorsstorage.cpp \
     gamemodule.cpp \
-    MarkerFinder/marker.cpp
+    MarkerFinder/marker.cpp \
+    MarkersStorage/markerpolarcs.cpp \
+    MarkersStorage/markersstorage.cpp
 
 HEADERS  += \
     physicalexercisedetector.h \
@@ -32,11 +34,19 @@ HEADERS  += \
     MarkerFinder/markerfinder.h \
     MarkerFinder/colorsstorage.h \
     gamemodule.h \
-    MarkerFinder/marker.h
+    MarkerFinder/marker.h \
+    MarkersStorage/markerpolarcs.h \
+    MarkersStorage/markersstorage.h
 
 FORMS    +=
 INCLUDEPATH += C:/OpenCV/mingw/install/include
 LIBS += C:/OpenCV/mingw/install/lib/*.a
+
+
+
+
+
+
 
 
 

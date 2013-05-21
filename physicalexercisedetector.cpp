@@ -9,6 +9,8 @@ PhysicalExerciseDetector::PhysicalExerciseDetector(int w, int h)
     bgdetector     = 0;
     bgteacher      = new BGTeacher(w, h);
     colors_storage = new ColorsStorage(20, 60, 60);
+    markers_storage= new MarkersStorage(710, 80);
+
     hsv_tmp_img    = cvCreateImage(cvSize(640,480),8,3);
 
 }
@@ -33,7 +35,7 @@ void PhysicalExerciseDetector::pushGameImage(const IplImage * input_img)
         cvCvtColor(input_img,hsv_tmp_img, CV_BGR2HSV);
         bgdetector->checkImg(hsv_tmp_img);
         std::vector <Marker> found_markers = marker_finder->getMarkers(hsv_tmp_img, colors_storage);
-        all_video_markers.push_back(found_markers);
+        markers_storage->pushMarkers(found_markers);
 
         for (int i = 0 ; i < found_markers.size() ; i++)
         {
