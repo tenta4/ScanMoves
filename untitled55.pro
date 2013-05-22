@@ -10,33 +10,39 @@ TARGET = untitled55
 TEMPLATE = app
 
 
-SOURCES += main.cpp \
-    physicalexercisedetector.cpp \
+SOURCES +=  \
+    main.cpp \
+    \
+    gamemodule.cpp \
+    \
     VideoSource/webcamemul.cpp \
     VideoSource/webcam.cpp \
     VideoSource/iwebcam.cpp \
-    BackgroundSubtraction/bgteacher.cpp \
-    BackgroundSubtraction/bgdetector.cpp \
-    MarkerFinder/markerfinder.cpp \
-    MarkerFinder/colorsstorage.cpp \
-    gamemodule.cpp \
-    MarkerFinder/marker.cpp \
-    MarkersStorage/markerpolarcs.cpp \
-    MarkersStorage/markersstorage.cpp
+    RecognitionBase/physicalexercisedetector.cpp \
+    RecognitionBase/BackgroundSubtraction/bgteacher.cpp \
+    RecognitionBase/BackgroundSubtraction/bgdetector.cpp \
+    RecognitionBase/MarkerFinder/markerfinder.cpp \
+    RecognitionBase/MarkerFinder/colorsstorage.cpp \
+    RecognitionBase/MarkerFinder/marker.cpp \
+    RecognitionBase/MarkersStorage/markerpolarcs.cpp \
+    RecognitionBase/MarkersStorage/markersstorage.cpp
+
 
 HEADERS  += \
-    physicalexercisedetector.h \
+    gamemodule.h \
+    \
     VideoSource/webcamemul.h \
     VideoSource/webcam.h \
     VideoSource/iwebcam.h \
-    BackgroundSubtraction/bgteacher.h \
-    BackgroundSubtraction/bgdetector.h \
-    MarkerFinder/markerfinder.h \
-    MarkerFinder/colorsstorage.h \
-    gamemodule.h \
-    MarkerFinder/marker.h \
-    MarkersStorage/markerpolarcs.h \
-    MarkersStorage/markersstorage.h
+    \
+    RecognitionBase/physicalexercisedetector.h \
+    RecognitionBase/BackgroundSubtraction/bgteacher.h \
+    RecognitionBase/BackgroundSubtraction/bgdetector.h \
+    RecognitionBase/MarkerFinder/markerfinder.h \
+    RecognitionBase/MarkerFinder/colorsstorage.h \
+    RecognitionBase/MarkerFinder/marker.h \
+    RecognitionBase/MarkersStorage/markerpolarcs.h \
+    RecognitionBase/MarkersStorage/markersstorage.h
 
 FORMS    +=
 INCLUDEPATH += C:/OpenCV/mingw/install/include

@@ -12,7 +12,7 @@
 #include "VideoSource/webcamemul.h"
 #include "VideoSource/webcam.h"
 
-#include "physicalexercisedetector.h"
+#include "RecognitionBase/physicalexercisedetector.h"
 
 #include "QTime"
 
