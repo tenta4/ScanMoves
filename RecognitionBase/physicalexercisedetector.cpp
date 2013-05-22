@@ -30,35 +30,24 @@ void PhysicalExerciseDetector::pushGameImage(const IplImage * input_img)
     if (input_img->width != images_width || input_img->height != images_height)
         throw std::out_of_range("resolution error in PhysicalExerciseDetector");
 
-    if (marker_finder && bgteacher->getMiddle())
-    {
-        cvCvtColor(input_img,hsv_tmp_img, CV_BGR2HSV);
-        bgdetector->checkImg(hsv_tmp_img);
-        std::vector <Marker> found_markers = marker_finder->getMarkers(hsv_tmp_img, colors_storage);
-        markers_storage->pushMarkers(found_markers);
-
-        for (int i = 0 ; i < found_markers.size() ; i++)
-        {
-            Marker m = found_markers.at(i);
-            cvDrawCircle(hsv_tmp_img,m.left,    5, cvScalar(128),2);
-            cvDrawCircle(hsv_tmp_img,m.rihgt,   5, cvScalar(128),2);
-            cvDrawCircle(hsv_tmp_img,m.top,     5, cvScalar(128),2);
-            cvDrawCircle(hsv_tmp_img,m.buttom,  5, cvScalar(128),2);
-
-            cvDrawLine  (hsv_tmp_img,m.left,    m.top,      cvScalar(128),2);
-            cvDrawLine  (hsv_tmp_img,m.top,     m.rihgt,    cvScalar(128),2);
-            cvDrawLine  (hsv_tmp_img,m.buttom,  m.rihgt,    cvScalar(128),2);
-            cvDrawLine  (hsv_tmp_img,m.left,    m.buttom,   cvScalar(128),2);
-
-        }
-        cvShowImage("ScanMoves", hsv_tmp_img);
-    }
-    else
+    if (!marker_finder || !bgteacher->getMiddle())
     {
         bgteacher->calc();
         delete bgdetector;
         bgdetector = new BGDetector(bgteacher, 40, 8);
         marker_finder = new MarkerFinder(cvSize(images_width, images_height));
+    }
+
+    {
+        cvCvtColor(input_img,hsv_tmp_img, CV_BGR2HSV);
+        bgdetector->checkImg(hsv_tmp_img);
+        std::vector <Marker> found_markers = marker_finder->getMarkers(hsv_tmp_img, colors_storage);
+        markers_storage->pushMarkers(found_markers);
+        markers_storage->pushImage(input_img);
+
+        MarkersDrawing::draw(hsv_tmp_img, found_markers);
+
+        cvShowImage("ScanMoves", hsv_tmp_img);
     }
 }
 PhysicalExerciseDetector::~PhysicalExerciseDetector()
@@ -68,4 +57,14 @@ PhysicalExerciseDetector::~PhysicalExerciseDetector()
     delete bgdetector;
     delete bgteacher;
     cvReleaseImage(&hsv_tmp_img);
+}
+
+const std::vector <std::vector <Marker> >  PhysicalExerciseDetector::getMarkers()
+{
+    return markers_storage->getMarkers();
+}
+
+void PhysicalExerciseDetector::saveMovement(const char *name)
+{
+    markers_storage->saveMovement(name);
 }

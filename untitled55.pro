@@ -25,7 +25,9 @@ SOURCES +=  \
     RecognitionBase/MarkerFinder/colorsstorage.cpp \
     RecognitionBase/MarkerFinder/marker.cpp \
     RecognitionBase/MarkersStorage/markerpolarcs.cpp \
-    RecognitionBase/MarkersStorage/markersstorage.cpp
+    RecognitionBase/MarkersStorage/markersstorage.cpp \
+    movecreator.cpp \
+    RecognitionBase/markersdrawing.cpp
 
 
 HEADERS  += \
@@ -42,11 +44,17 @@ HEADERS  += \
     RecognitionBase/MarkerFinder/colorsstorage.h \
     RecognitionBase/MarkerFinder/marker.h \
     RecognitionBase/MarkersStorage/markerpolarcs.h \
-    RecognitionBase/MarkersStorage/markersstorage.h
+    RecognitionBase/MarkersStorage/markersstorage.h \
+    movecreator.h \
+    RecognitionBase/markersdrawing.h
 
 FORMS    +=
 INCLUDEPATH += C:/OpenCV/mingw/install/include
 LIBS += C:/OpenCV/mingw/install/lib/*.a
+
+
+
+
 
 
 

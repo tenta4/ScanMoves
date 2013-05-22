@@ -9,6 +9,7 @@
 #include "MarkerFinder/colorsstorage.h"
 
 #include "MarkersStorage/markersstorage.h"
+#include "markersdrawing.h"
 
 class PhysicalExerciseDetector
 {
@@ -26,7 +27,10 @@ public:
     void pushBackGroungImage(const IplImage*);
     void pushEtalonMarkersImage(const IplImage*, std::vector <CvPoint> init_markers_position);
     void pushGameImage(const IplImage*);
+    void saveMovement(const char * name);
+    const std::vector <std::vector <Marker> >   getMarkers();
     ~PhysicalExerciseDetector();
+
 };
 
 #endif // PHYSICALEXERCISEDETECTOR_H

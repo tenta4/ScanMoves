@@ -7,9 +7,11 @@ MarkersStorage::MarkersStorage(float focal_length, float markers_real_size):
 
 }
 
-void MarkersStorage::pushImage(IplImage * input_image)
+void MarkersStorage::pushImage(const IplImage * input_image)
 {
-    images.push_back(input_image);
+    IplImage* tmp_img = cvCreateImage(cvGetSize(input_image), input_image->depth, input_image->nChannels);
+    cvCopy(input_image,tmp_img);
+    images.push_back(tmp_img);
 }
 
 void MarkersStorage::pushMarkers(std::vector<Marker> input_markers)
@@ -52,6 +54,15 @@ void MarkersStorage::pushMarkers(std::vector<Marker> input_markers)
 void MarkersStorage::saveMovement(const char *name)
 {
     mkdir(name);
+    char tmp_name[255];
+    for (int i = 0 ; i < images.size() ; i++)
+    {
+        sprintf(tmp_name,"%s\\%d.png",name,i);
+        qDebug()<<tmp_name;
+        cvSaveImage(tmp_name, images.at(i));
+
+    }
+
 }
 
 MarkersStorage::~MarkersStorage()
@@ -60,4 +71,9 @@ MarkersStorage::~MarkersStorage()
     {
         cvReleaseImage(&images.at(i));
     }
+}
+
+const std::vector <std::vector <Marker> >  MarkersStorage::getMarkers()
+{
+    return all_video_markers;
 }

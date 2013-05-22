@@ -143,7 +143,6 @@ void GameModule::adaptationMode()
     }
     waitingWND("Adaptation finished", false);
 
-
 }
 
 int GameModule::waitingWND(const char* _text, bool is_timer, int delay)
