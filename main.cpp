@@ -3,7 +3,8 @@
 #include "Qdebug"
 int main(int argc, char** argv)
 {
-    if (argc == 0 ) GameModule gm;
+    if (argc == 1 )
+        GameModule gm;
     else
     {
         MoveCreator mc(argv[1]);

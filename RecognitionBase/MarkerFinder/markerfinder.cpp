@@ -100,7 +100,11 @@ void MarkerFinder::inRange(IplImage *src, std::vector <ColorsTrasholds> colors, 
 
 
             vval = p_img[pos_lvl2+2];
-            if (!vval) continue;   // if cell is white (bgcolor)
+            if (!vval)                 // if cell is white (bgcolor)
+            {
+                i+=8;
+                continue;
+            }
 
             hval = p_img[pos_lvl2  ];
             sval = p_img[pos_lvl2+1];
