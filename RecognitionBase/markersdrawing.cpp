@@ -18,3 +18,14 @@ void MarkersDrawing::draw(IplImage * image, std::vector<Marker> found_markers)
     }
 
 }
+
+void MarkersDrawing::draw(std::vector<IplImage *> images, std::vector<std::vector<Marker> > markers)
+{
+    if (images.size() != markers.size()) return;
+
+    for (int i = 0 ; i < images.size() ; i++)
+    {
+                MarkersDrawing::draw(images.at(i), markers.at(i));
+    }
+
+}

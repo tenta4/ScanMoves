@@ -10,7 +10,6 @@
 
 #include "MarkersStorage/markersstorage.h"
 #include "markersdrawing.h"
-
 class PhysicalExerciseDetector
 {
     int images_width;

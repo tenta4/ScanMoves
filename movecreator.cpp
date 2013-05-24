@@ -10,7 +10,12 @@ MoveCreator::MoveCreator(const char* name)
     adaptationMode();
     recordMode();
     visualMode();
-    detector->saveMovement(name);
+    saveMode(name);
+}
+
+void MoveCreator::saveMode(const char *name)
+{
+    MarkersIO::saveMovement(name, detector->getMarkers(), images);
 }
 
 void MoveCreator::recordMode()
@@ -90,23 +95,26 @@ void MoveCreator::adaptationMode()
           cvShowImage( "ScanMoves", image);
 
     }
-    waitingWND("Adaptation finished", false);
+    waitingWND("Begin your movement", true);
 
 
 }
 
 void MoveCreator::visualMode()
 {
-    int position = 0;
     std::vector <std::vector <Marker> > markers = detector->getMarkers();
+
+    MarkersDrawing::draw(images, markers);
+
+    int position = 0;
+
     while (1)
     {
         if (position < 0) position = 0 ;
         else if (position >= images.size()) position = images.size()-1;
 
-        MarkersDrawing::draw(images[position], markers.at(position));
-        cvShowImage("name", images[position]);
-        char c =cvWaitKey(30);
+        cvShowImage("ScanMoves", images[position]);
+        char c =cvWaitKey(10);
         if (c == 'a') position--;
         else if (c == 'd') position++;
         else if (c == 27) return;

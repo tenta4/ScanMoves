@@ -5,13 +5,17 @@
 
 struct Marker
 {
+    int     id_marker;
 
     CvPoint left;
     CvPoint rihgt;
     CvPoint top;
     CvPoint buttom;
     int     acreage;
-    int     id_marker;
+
+    float   angle_x;
+    float   angle_y;
+    float   coord_z;
 
     Marker();
     Marker (int id);

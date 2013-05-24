@@ -92,6 +92,8 @@ int GameModule::gameMode()
 
     }
 
+    detector->getMarkers();
+
 }
 
 void GameModule::adaptationMode()

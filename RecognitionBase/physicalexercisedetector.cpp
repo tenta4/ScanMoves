@@ -43,7 +43,6 @@ void PhysicalExerciseDetector::pushGameImage(const IplImage * input_img)
         bgdetector->checkImg(hsv_tmp_img);
         std::vector <Marker> found_markers = marker_finder->getMarkers(hsv_tmp_img, colors_storage);
         markers_storage->pushMarkers(found_markers);
-        markers_storage->pushImage(input_img);
 
         MarkersDrawing::draw(hsv_tmp_img, found_markers);
 
@@ -66,5 +65,5 @@ const std::vector <std::vector <Marker> >  PhysicalExerciseDetector::getMarkers(
 
 void PhysicalExerciseDetector::saveMovement(const char *name)
 {
-    markers_storage->saveMovement(name);
+
 }
