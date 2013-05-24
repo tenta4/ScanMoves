@@ -92,7 +92,7 @@ int GameModule::gameMode()
 
     }
 
-    detector->getMarkers();
+    detector->getMarkersStorage();
 
 }
 

@@ -6,7 +6,7 @@ MarkersIO::MarkersIO()
 
 void MarkersIO::saveMovement(
         const char *name,
-        const std::vector<std::vector<Marker> > markers,
+        const MarkersStorage markers_storage,
         const std::vector<IplImage *> images)
 {
     mkdir(name);
@@ -21,8 +21,12 @@ void MarkersIO::saveMovement(
 
     sprintf(tmp_name,"%s\\%s.txt",name,name);
 
+    MarkersStorage ms(markers_storage);
+    const std::vector <std::vector <Marker> >   markers = ms.getMarkersVector();
+
     std::ofstream file;
     file.open(tmp_name);
+
 
     file<<markers.size()<<std::endl;
 

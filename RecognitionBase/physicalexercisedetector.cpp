@@ -58,9 +58,10 @@ PhysicalExerciseDetector::~PhysicalExerciseDetector()
     cvReleaseImage(&hsv_tmp_img);
 }
 
-const std::vector <std::vector <Marker> >  PhysicalExerciseDetector::getMarkers()
+MarkersStorage  PhysicalExerciseDetector::getMarkersStorage()
 {
-    return markers_storage->getMarkers();
+    markers_storage->convertToPolarCS();
+    return *markers_storage;
 }
 
 void PhysicalExerciseDetector::saveMovement(const char *name)

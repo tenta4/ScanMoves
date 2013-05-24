@@ -2,7 +2,7 @@
 #define MARKERSIO_H
 
 #include "vector"
-#include "marker.h"
+#include "MarkersStorage/markersstorage.h"
 #include "fstream"
 #include "dir.h"
 
@@ -13,12 +13,12 @@ public:
     MarkersIO();
     static void saveMovement(
             const char * name,
-            const std::vector <std::vector <Marker> > markers,
+            const MarkersStorage markers,
             const std::vector <IplImage*>);
 
     static void openMovement(
             const char * name,
-            std::vector <std::vector <Marker> > markers,
+            MarkersStorage markers,
             std::vector <IplImage*>);
 };
 

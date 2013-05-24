@@ -27,7 +27,7 @@ public:
     void pushEtalonMarkersImage(const IplImage*, std::vector <CvPoint> init_markers_position);
     void pushGameImage(const IplImage*);
     void saveMovement(const char * name);
-    const std::vector <std::vector <Marker> >   getMarkers();
+    MarkersStorage   getMarkersStorage();
     ~PhysicalExerciseDetector();
 
 };

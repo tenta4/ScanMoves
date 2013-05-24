@@ -15,7 +15,7 @@ MoveCreator::MoveCreator(const char* name)
 
 void MoveCreator::saveMode(const char *name)
 {
-    MarkersIO::saveMovement(name, detector->getMarkers(), images);
+    MarkersIO::saveMovement(name, detector->getMarkersStorage(), images);
 }
 
 void MoveCreator::recordMode()
@@ -102,7 +102,7 @@ void MoveCreator::adaptationMode()
 
 void MoveCreator::visualMode()
 {
-    std::vector <std::vector <Marker> > markers = detector->getMarkers();
+    MarkersStorage markers = detector->getMarkersStorage();
 
     MarkersDrawing::draw(images, markers);
 

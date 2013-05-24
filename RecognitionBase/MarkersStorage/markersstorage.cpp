@@ -16,7 +16,7 @@ MarkersStorage::~MarkersStorage()
 
 }
 
-const std::vector <std::vector <Marker> >  MarkersStorage::getMarkers()
+void MarkersStorage::convertToPolarCS()
 {
     std::vector <std::vector <Marker> >  tmp_markers_vec_vec;
 
@@ -55,5 +55,5 @@ const std::vector <std::vector <Marker> >  MarkersStorage::getMarkers()
         }
         tmp_markers_vec_vec.push_back(tmp_markers_vec);
     }
-    return tmp_markers_vec_vec;
+    all_video_markers = tmp_markers_vec_vec;
 }
