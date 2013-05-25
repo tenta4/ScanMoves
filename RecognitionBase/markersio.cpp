@@ -1,5 +1,5 @@
 #include "markersio.h"
-
+#include "QDebug"
 MarkersIO::MarkersIO()
 {
 }
@@ -21,8 +21,7 @@ void MarkersIO::saveMovement(
 
     sprintf(tmp_name,"%s\\%s.txt",name,name);
 
-    MarkersStorage ms(markers_storage);
-    const std::vector <std::vector <Marker> >   markers = ms.getMarkersVector();
+    const std::vector <std::vector <Marker> >   markers = markers_storage.getMarkersVector();
 
     std::ofstream file;
     file.open(tmp_name);
@@ -48,5 +47,47 @@ void MarkersIO::saveMovement(
         file << std::endl;
     }
     file.close();
+
+}
+
+void MarkersIO::openMovement(const char *name, MarkersStorage& markers, std::vector<IplImage *>& images)
+{
+
+    char tmp_name[255];
+
+    for (int i = 0 ; 1 ; i++)
+    {
+        sprintf(tmp_name,"%s\\%d.png",name,i);
+        IplImage* img = cvLoadImage(tmp_name);
+        if (!img) break;
+        images.push_back(img);
+
+    }
+
+    sprintf(tmp_name,"%s\\%s.txt",name,name);
+
+    std::ifstream file;
+    file.open(tmp_name);
+
+    int frame_count = 0;
+    file >> frame_count;
+
+    for (int i = 0 ; i < frame_count ; i++)
+    {
+        std::vector <Marker> markers_vec;
+        int markers_count = 0;
+        file >> markers_count;
+        for (int j = 0 ; j < markers_count ; j++)
+        {
+            Marker m;
+            file >> m.id_marker;
+            file >> m.angle_x;
+            file >> m.angle_y;
+            file >> m.coord_z;
+            markers_vec.push_back(m);
+        }
+        markers.pushMarkers(markers_vec);
+    }
+    //calcul markers coords
 
 }

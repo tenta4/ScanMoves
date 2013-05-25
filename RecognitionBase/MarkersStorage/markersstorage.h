@@ -13,7 +13,7 @@ class MarkersStorage
 
 public:
     void pushMarkers(std::vector <Marker> input_markers);
-    const std::vector <std::vector <Marker> >   getMarkersVector() {return all_video_markers;}
+    const std::vector <std::vector <Marker> >   getMarkersVector() const {return all_video_markers;}
     void  convertToPolarCS();
 
     MarkersStorage(float focal_length, float markers_real_size);

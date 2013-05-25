@@ -1,6 +1,6 @@
 #include "markersdrawing.h"
 
-void MarkersDrawing::draw(IplImage * image, std::vector<Marker> found_markers)
+void MarkersDrawing::draw(IplImage * image, const std::vector<Marker> found_markers)
 {
     for (int i = 0 ; i < found_markers.size() ; i++)
     {
@@ -19,14 +19,14 @@ void MarkersDrawing::draw(IplImage * image, std::vector<Marker> found_markers)
 
 }
 
-void MarkersDrawing::draw(std::vector<IplImage *> images, MarkersStorage markers)
+void MarkersDrawing::draw(std::vector<IplImage *> images, const MarkersStorage markers)
 {
     const std::vector <std::vector <Marker> >  all_video_markers = markers.getMarkersVector();
     if (images.size() != all_video_markers.size()) return;
 
     for (int i = 0 ; i < images.size() ; i++)
     {
-                MarkersDrawing::draw(images.at(i), all_video_markers.at(i));
+        MarkersDrawing::draw(images.at(i), all_video_markers.at(i));
     }
 
 }

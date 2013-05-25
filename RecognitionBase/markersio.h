@@ -18,8 +18,8 @@ public:
 
     static void openMovement(
             const char * name,
-            MarkersStorage markers,
-            std::vector <IplImage*>);
+            MarkersStorage& markers,
+            std::vector <IplImage*> & imgs);
 };
 
 #endif // MARKERSIO_H

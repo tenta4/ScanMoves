@@ -5,8 +5,8 @@
 class MarkersDrawing
 {
 public:
-    static void draw(IplImage*, std::vector <Marker> markers);
-    static void draw(std::vector <IplImage*>, MarkersStorage markers);
+    static void draw(IplImage*, const std::vector <Marker> markers);
+    static void draw(std::vector <IplImage*>, const MarkersStorage markers);
 };
 
 #endif // MARKERSDRAWING_H

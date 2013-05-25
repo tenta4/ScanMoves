@@ -16,6 +16,7 @@ MoveCreator::MoveCreator(const char* name)
 void MoveCreator::saveMode(const char *name)
 {
     MarkersIO::saveMovement(name, detector->getMarkersStorage(), images);
+
 }
 
 void MoveCreator::recordMode()
