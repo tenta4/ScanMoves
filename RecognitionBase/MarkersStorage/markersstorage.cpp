@@ -16,6 +16,36 @@ MarkersStorage::~MarkersStorage()
 
 }
 
+void MarkersStorage::convertToImageCS(CvSize2D32f camera_angles, CvSize2D32f image_resol, float markers_size)
+{
+    CvSize2D32f half_camera_ang = cvSize2D32f(camera_angles.width / 2, camera_angles.height / 2 );
+    CvSize2D32f half_image_size = cvSize2D32f(image_resol.width / 2  , image_resol.height  / 2 );
+
+    for (int i = 0 ; i < all_video_markers.size() ; i++)
+    {
+        std::vector <Marker> marker_vec = all_video_markers.at(i);
+        for (int j = 0 ; j < marker_vec.size() ; j++)
+        {
+            Marker m = marker_vec.at(j);
+            CvPoint marker_center;
+            marker_center.x = m.angle_y / half_camera_ang.width * half_image_size.width + half_image_size.width;
+            marker_center.y = m.angle_x / half_camera_ang.height* half_image_size.height+ half_image_size.height;
+
+            float markers_half_width = 710.0 * markers_size / m.coord_z / 2;
+
+            m.left   = cvPoint( marker_center.x - markers_half_width, marker_center.y);
+            m.rihgt  = cvPoint( marker_center.x + markers_half_width, marker_center.y);
+            m.top    = cvPoint( marker_center.x, marker_center.y - markers_half_width);
+            m.buttom = cvPoint( marker_center.x, marker_center.y + markers_half_width);
+
+            marker_vec.at(j) = m ;
+            qDebug()<<marker_center.x<<marker_center.y<<markers_half_width<<(m.angle_y / half_camera_ang.width * half_image_size.width + half_image_size.width);
+        }
+        all_video_markers.at(i) = marker_vec;
+    }
+
+}
+
 void MarkersStorage::convertToPolarCS()
 {
     std::vector <std::vector <Marker> >  tmp_markers_vec_vec;
@@ -44,7 +74,9 @@ void MarkersStorage::convertToPolarCS()
                     / half_image_size.height * half_camera_angles.height;
 
             tmp_marker.coord_z = focal_length * markers_real_size / tmp_marker.getMaxWidth();
-
+            /*
+            tmp_marker.coord_z = half_image_size.width / half_camera_angles *
+            */
             qDebug()<<"*************";
             qDebug()<< "left x,y "<<tmp_marker.left.x   <<tmp_marker.left.y;
             qDebug()<< "right x,y"<<tmp_marker.rihgt.x  <<tmp_marker.rihgt.y;
