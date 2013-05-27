@@ -23,6 +23,10 @@ public:
 
     static void openMovement(
             const char * name,
+            std::vector <IplImage*> & imgs);
+
+    static void openMovement(
+            const char * name,
             MarkersStorage& markers);
 
 };

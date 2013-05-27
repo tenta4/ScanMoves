@@ -84,6 +84,13 @@ void MarkersIO::openMovement(const char *name, MarkersStorage &markers)
 void MarkersIO::openMovement(const char *name, MarkersStorage& markers, std::vector<IplImage *>& images)
 {
 
+
+    openMovement(name, images);
+    openMovement(name, markers);
+}
+
+void MarkersIO::openMovement(const char *name, std::vector<IplImage *> &images)
+{
     char tmp_name[255];
 
     for (int i = 0 ; 1 ; i++)
@@ -95,5 +102,4 @@ void MarkersIO::openMovement(const char *name, MarkersStorage& markers, std::vec
 
     }
 
-    openMovement(name, markers);
 }

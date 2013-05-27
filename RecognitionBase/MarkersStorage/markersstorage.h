@@ -19,7 +19,10 @@ public:
     void convertToPolarCS();
     void convertToImageCS();
     void clearStorage();
-    MarkersStorage(CvSize2D32f camera_angles, CvSize2D32f image_resol, float markers_real_size = 80);
+    MarkersStorage(
+            CvSize2D32f camera_angles,
+            CvSize2D32f image_resol,
+            float markers_real_size = 80);
     ~MarkersStorage();
 };
 

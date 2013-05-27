@@ -63,9 +63,24 @@ GameModule::GameModule()
         }
     }
 }
+void GameModule::showTaskMode(char *movement_name)
+{
+    std::vector <IplImage*> images;
+    MarkersIO::openMovement(movement_name, images);
+    for (int i = 0 ; 1 ; i++)
+    {
+        cvShowImage("ScanMoves", images.at(i%images.size()));
+        char c = cvWaitKey(30);
+        if (c >= 0) break;
+    }
+}
 
 int GameModule::gameMode()
 {
+
+    char* movement_name = "tt";
+
+    showTaskMode(movement_name);
 
     std::vector <IplImage*> images;
 
@@ -106,7 +121,7 @@ int GameModule::gameMode()
     MarkersStorage etal_ms(camera->getCameraAngles(), cvSize2D32f(camera->getWidth(),camera->getHeight()));
 
 
-    MarkersIO::openMovement("tt", etal_ms);
+    MarkersIO::openMovement(movement_name, etal_ms);
 
     etal_ms.convertToImageCS();
     qDebug()<<"result"<<MarkersComparator::compare(etal_ms, user_ms);
