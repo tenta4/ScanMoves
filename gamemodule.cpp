@@ -124,7 +124,7 @@ int GameModule::gameMode()
         char c =cvWaitKey(10);
         if (c == 'a') position--;
         else if (c == 'd') position++;
-        else if (c == 27) return 0;
+        else if (c == 27) break;
     }
 
     //clear trach data
