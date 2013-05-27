@@ -13,6 +13,8 @@
 #include "VideoSource/webcam.h"
 
 #include "RecognitionBase/physicalexercisedetector.h"
+#include "RecognitionBase/markersio.h"
+#include "RecognitionBase/markerscomparator.h"
 
 #include "QTime"
 

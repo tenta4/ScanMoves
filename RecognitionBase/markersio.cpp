@@ -50,19 +50,9 @@ void MarkersIO::saveMovement(
 
 }
 
-void MarkersIO::openMovement(const char *name, MarkersStorage& markers, std::vector<IplImage *>& images)
+void MarkersIO::openMovement(const char *name, MarkersStorage &markers)
 {
-
-    char tmp_name[255];
-
-    for (int i = 0 ; 1 ; i++)
-    {
-        sprintf(tmp_name,"%s\\%d.png",name,i);
-        IplImage* img = cvLoadImage(tmp_name);
-        if (!img) break;
-        images.push_back(img);
-
-    }
+    char tmp_name[256];
 
     sprintf(tmp_name,"%s\\%s.txt",name,name);
 
@@ -88,6 +78,22 @@ void MarkersIO::openMovement(const char *name, MarkersStorage& markers, std::vec
         }
         markers.pushMarkers(markers_vec);
     }
-    //calcul markers coords
 
+}
+
+void MarkersIO::openMovement(const char *name, MarkersStorage& markers, std::vector<IplImage *>& images)
+{
+
+    char tmp_name[255];
+
+    for (int i = 0 ; 1 ; i++)
+    {
+        sprintf(tmp_name,"%s\\%d.png",name,i);
+        IplImage* img = cvLoadImage(tmp_name);
+        if (!img) break;
+        images.push_back(img);
+
+    }
+
+    openMovement(name, markers);
 }

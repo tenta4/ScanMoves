@@ -20,6 +20,11 @@ public:
             const char * name,
             MarkersStorage& markers,
             std::vector <IplImage*> & imgs);
+
+    static void openMovement(
+            const char * name,
+            MarkersStorage& markers);
+
 };
 
 #endif // MARKERSIO_H

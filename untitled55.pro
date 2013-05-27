@@ -27,7 +27,8 @@ SOURCES +=  \
     RecognitionBase/MarkersStorage/markersstorage.cpp \
     movecreator.cpp \
     RecognitionBase/markersdrawing.cpp \
-    RecognitionBase/markersio.cpp
+    RecognitionBase/markersio.cpp \
+    RecognitionBase/markerscomparator.cpp
 
 
 HEADERS  += \
@@ -46,11 +47,14 @@ HEADERS  += \
     RecognitionBase/MarkersStorage/markersstorage.h \
     movecreator.h \
     RecognitionBase/markersdrawing.h \
-    RecognitionBase/markersio.h
+    RecognitionBase/markersio.h \
+    RecognitionBase/markerscomparator.h
 
 FORMS    +=
 INCLUDEPATH += C:/OpenCV/mingw/install/include
 LIBS += C:/OpenCV/mingw/install/lib/*.a
+
+
 
 
 

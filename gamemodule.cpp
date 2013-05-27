@@ -66,6 +66,9 @@ GameModule::GameModule()
 
 int GameModule::gameMode()
 {
+
+    std::vector <IplImage*> images;
+
     QTime time;
 
     int sum = 0;
@@ -73,6 +76,11 @@ int GameModule::gameMode()
     for(;;)
     {
           IplImage* image = camera->getFrame();
+
+          IplImage* image2 = cvCreateImage(cvSize(640,480),8,3);
+
+          cvCopy(image,image2);
+          images.push_back(image2);
 
           if (WRITE_TO_FILE == 1)
           {
@@ -92,7 +100,31 @@ int GameModule::gameMode()
 
     }
 
-    detector->getMarkersStorage();
+    MarkersStorage user_ms = detector->getMarkersStorage();
+    MarkersStorage etal_ms(710,80);
+
+
+    MarkersIO::openMovement("tt", etal_ms);
+
+    etal_ms.convertToImageCS(cvSize2D32f(60,44),cvSize2D32f(640,480),80);
+    qDebug()<<"result"<<MarkersComparator::compare(etal_ms, user_ms);
+    MarkersDrawing::draw(images,user_ms);
+
+
+    int position = 0;
+
+    while (1)
+    {
+        if (position < 0) position = 0 ;
+        else if (position >= images.size()) position = images.size()-1;
+
+        cvShowImage("ScanMoves", images[position]);
+        char c =cvWaitKey(10);
+        if (c == 'a') position--;
+        else if (c == 'd') position++;
+        else if (c == 27) return 0;
+    }
+
 
 }
 

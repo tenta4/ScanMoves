@@ -8,7 +8,7 @@
 
 #include "list"
 
-#define USE_EMUL 1
+#define USE_EMUL 0
 #define MAX_CAM_CADR 10
 
 class MoveCreator
