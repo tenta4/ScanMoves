@@ -22,7 +22,7 @@ class PhysicalExerciseDetector
     MarkersStorage* markers_storage;
 
 public:
-    PhysicalExerciseDetector(int images_width, int images_height);
+    PhysicalExerciseDetector(CvSize2D32f camera_angles, int images_width, int images_height, float marker_size);
     void pushBackGroungImage(const IplImage*);
     void pushEtalonMarkersImage(const IplImage*, std::vector <CvPoint> init_markers_position);
     void pushGameImage(const IplImage*);

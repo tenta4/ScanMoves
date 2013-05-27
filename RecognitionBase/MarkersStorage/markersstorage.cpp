@@ -1,7 +1,7 @@
 #include "markersstorage.h"
 #include "QDebug"
-MarkersStorage::MarkersStorage(float focal_length, float markers_real_size):
-    focal_length(focal_length), markers_real_size(markers_real_size)
+MarkersStorage::MarkersStorage(CvSize2D32f camera_angles, CvSize2D32f image_resol,float markers_real_size):
+    camera_angles(camera_angles), image_resol(image_resol),markers_real_size(markers_real_size)
 {
 
 }
@@ -16,7 +16,7 @@ MarkersStorage::~MarkersStorage()
 
 }
 
-void MarkersStorage::convertToImageCS(CvSize2D32f camera_angles, CvSize2D32f image_resol, float markers_size)
+void MarkersStorage::convertToImageCS()
 {
     CvSize2D32f half_camera_ang = cvSize2D32f(camera_angles.width / 2, camera_angles.height / 2 );
     CvSize2D32f half_image_size = cvSize2D32f(image_resol.width / 2  , image_resol.height  / 2 );
@@ -31,7 +31,8 @@ void MarkersStorage::convertToImageCS(CvSize2D32f camera_angles, CvSize2D32f ima
             marker_center.x = m.angle_y / half_camera_ang.width * half_image_size.width + half_image_size.width;
             marker_center.y = m.angle_x / half_camera_ang.height* half_image_size.height+ half_image_size.height;
 
-            float markers_half_width = 710.0 * markers_size / m.coord_z / 2;
+            //todo - calc, using camera angles
+            float markers_half_width = 710.0 * markers_real_size / m.coord_z / 2;
 
             m.left   = cvPoint( marker_center.x - markers_half_width, marker_center.y);
             m.rihgt  = cvPoint( marker_center.x + markers_half_width, marker_center.y);
@@ -77,10 +78,9 @@ void MarkersStorage::convertToPolarCS()
             tmp_marker.angle_x = ( marker_center.y - half_image_size.height)
                     / half_image_size.height * half_camera_angles.height;
 
-            tmp_marker.coord_z = focal_length * markers_real_size / tmp_marker.getMaxWidth();
-            /*
-            tmp_marker.coord_z = half_image_size.width / half_camera_angles *
-            */
+            //todo - calc, using camera angles
+            tmp_marker.coord_z = 710.0 * markers_real_size / tmp_marker.getMaxWidth();
+
             qDebug()<<"*************";
             qDebug()<< "left x,y "<<tmp_marker.left.x   <<tmp_marker.left.y;
             qDebug()<< "right x,y"<<tmp_marker.rihgt.x  <<tmp_marker.rihgt.y;

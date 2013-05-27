@@ -32,7 +32,7 @@ GameModule::GameModule()
     if (WRITE_TO_FILE != 2)  camera = new WebCam("../distorsion_coeff.xml","../camera_matrix.xml");
     else camera = new WebCamEmul();
 
-    detector = new PhysicalExerciseDetector(camera->getWidth(),camera->getHeight());
+    detector = new PhysicalExerciseDetector(camera->getCameraAngles(),camera->getWidth(),camera->getHeight(), MARKERS_SIZE);
 
     std::vector <std::string> items;
     items.push_back("PLAY");
@@ -80,7 +80,7 @@ int GameModule::gameMode()
           IplImage* image = camera->getFrame();
 
           IplImage* image2 = cvCreateImage(cvSize(640,480),8,3);
-
+          //cvFlip
           cvCopy(image,image2);
           images.push_back(image2);
 
@@ -103,12 +103,12 @@ int GameModule::gameMode()
     }
 
     MarkersStorage user_ms = detector->getMarkersStorage();
-    MarkersStorage etal_ms(710,80);
+    MarkersStorage etal_ms(camera->getCameraAngles(), cvSize2D32f(camera->getWidth(),camera->getHeight()));
 
 
     MarkersIO::openMovement("tt", etal_ms);
 
-    etal_ms.convertToImageCS(cvSize2D32f(60,44),cvSize2D32f(640,480),80);
+    etal_ms.convertToImageCS();
     qDebug()<<"result"<<MarkersComparator::compare(etal_ms, user_ms);
     MarkersDrawing::draw(images,user_ms);
 

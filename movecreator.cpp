@@ -6,7 +6,7 @@ MoveCreator::MoveCreator(const char* name)
     if (!USE_EMUL)  camera = new WebCam("../distorsion_coeff.xml","../camera_matrix.xml");
     else camera = new WebCamEmul();
 
-    detector = new PhysicalExerciseDetector(camera->getWidth(),camera->getHeight());
+    detector = new PhysicalExerciseDetector(camera->getCameraAngles(),camera->getWidth(),camera->getHeight(), MARKERS_SIZE);
     adaptationMode();
     recordMode();
     visualMode();

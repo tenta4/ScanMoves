@@ -1,15 +1,15 @@
 #include "physicalexercisedetector.h"
 
-PhysicalExerciseDetector::PhysicalExerciseDetector(int w, int h)
+PhysicalExerciseDetector::PhysicalExerciseDetector(CvSize2D32f camera_angles, int width, int height, float marker_size)
 {
-    if (w<320 || w>2560 || h<240 && h<1536) throw std::out_of_range("bad images size");
-    images_width   = w;
-    images_height  = h;
+    if (width<320 || width>2560 || height<240 && height<1536) throw std::out_of_range("bad images size");
+    images_width   = width;
+    images_height  = height;
     marker_finder  = 0;
     bgdetector     = 0;
-    bgteacher      = new BGTeacher(w, h);
+    bgteacher      = new BGTeacher(width, height);
     colors_storage = new ColorsStorage(20, 60, 60);
-    markers_storage= new MarkersStorage(710, 80);
+    markers_storage= new MarkersStorage(camera_angles, cvSize2D32f(images_width, images_height), marker_size);
 
     hsv_tmp_img    = cvCreateImage(cvSize(640,480),8,3);
 

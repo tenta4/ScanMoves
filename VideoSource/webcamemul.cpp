@@ -6,6 +6,7 @@ WebCamEmul::WebCamEmul()
     tmp_image = cvCreateImage(cvSize(640,480),8,3);
 
 }
+
 IplImage * WebCamEmul::getFrame()
 {
     sprintf(count_frames_c,"%d.bin",count_frames_i);

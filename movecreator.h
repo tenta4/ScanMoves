@@ -10,6 +10,7 @@
 
 #define USE_EMUL 0
 #define MAX_CAM_CADR 10
+#define MARKERS_SIZE 80
 
 class MoveCreator
 {
