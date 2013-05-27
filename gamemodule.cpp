@@ -75,6 +75,8 @@ int GameModule::gameMode()
     int count = 0;
     for(;;)
     {
+          time.start();
+
           IplImage* image = camera->getFrame();
 
           IplImage* image2 = cvCreateImage(cvSize(640,480),8,3);
@@ -86,9 +88,9 @@ int GameModule::gameMode()
           {
               _writeToFile(image);
           }
-          //cvShowImage("Motion",image);
-          time.start();
+
           detector->pushGameImage(image);
+
           int timer_value = time.elapsed();
           qDebug()<<timer_value;
           sum += timer_value;
@@ -125,6 +127,12 @@ int GameModule::gameMode()
         else if (c == 27) return 0;
     }
 
+    //clear trach data
+    for (int i = 0 ; i < images.size() ; i++)
+    {
+        cvReleaseImage(&images.at(i));
+    }
+    detector->clearMarkersStorage();
 
 }
 

@@ -45,6 +45,10 @@ void MarkersStorage::convertToImageCS(CvSize2D32f camera_angles, CvSize2D32f ima
     }
 
 }
+void MarkersStorage::clearStorage()
+{
+    all_video_markers.clear();
+}
 
 void MarkersStorage::convertToPolarCS()
 {

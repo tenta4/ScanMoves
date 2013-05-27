@@ -2,7 +2,6 @@
 #include "QDebug"
 void MarkersDrawing::draw(IplImage * image, const std::vector<Marker> found_markers)
 {
-    qDebug()<<found_markers.size()<<"size";
     for (int i = 0 ; i < found_markers.size() ; i++)
     {
         Marker m = found_markers.at(i);

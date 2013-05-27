@@ -28,6 +28,7 @@ public:
     void pushGameImage(const IplImage*);
     void saveMovement(const char * name);
     MarkersStorage   getMarkersStorage();
+    void clearMarkersStorage();
     ~PhysicalExerciseDetector();
 
 };

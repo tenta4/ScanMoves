@@ -78,7 +78,7 @@ void MarkersIO::openMovement(const char *name, MarkersStorage &markers)
         }
         markers.pushMarkers(markers_vec);
     }
-
+    file.close();
 }
 
 void MarkersIO::openMovement(const char *name, MarkersStorage& markers, std::vector<IplImage *>& images)

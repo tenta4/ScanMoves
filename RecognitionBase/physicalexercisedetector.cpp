@@ -14,6 +14,11 @@ PhysicalExerciseDetector::PhysicalExerciseDetector(int w, int h)
     hsv_tmp_img    = cvCreateImage(cvSize(640,480),8,3);
 
 }
+void PhysicalExerciseDetector::clearMarkersStorage()
+{
+    markers_storage->clearStorage();
+}
+
 void PhysicalExerciseDetector::pushBackGroungImage(const IplImage * input_img)
 {
     cvCvtColor(input_img,hsv_tmp_img, CV_BGR2HSV);
