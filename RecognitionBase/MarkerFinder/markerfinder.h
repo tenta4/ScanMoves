@@ -4,8 +4,7 @@
 #include "opencv/highgui.h"
 #include "opencv/cv.h"
 #include "colorsstorage.h"
-#include "../marker.h"
-
+#include "../MarkersStorage/marker.h"
 class MarkerFinder
 {
 private:

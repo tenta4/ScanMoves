@@ -2,7 +2,7 @@
 #define MARKERSSTORAGE_H
 
 #include "vector"
-#include "../marker.h"
+#include "marker.h"
 #include "opencv/highgui.h"
 
 class MarkersStorage

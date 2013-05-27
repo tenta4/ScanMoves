@@ -19,7 +19,7 @@ SOURCES +=  \
     VideoSource/webcam.cpp \
     VideoSource/iwebcam.cpp \
     RecognitionBase/physicalexercisedetector.cpp \
-    RecognitionBase/marker.cpp \
+    RecognitionBase/MarkersStorage/marker.cpp \
     RecognitionBase/BackgroundSubtraction/bgteacher.cpp \
     RecognitionBase/BackgroundSubtraction/bgdetector.cpp \
     RecognitionBase/MarkerFinder/markerfinder.cpp \
@@ -39,7 +39,7 @@ HEADERS  += \
     VideoSource/iwebcam.h \
     \
     RecognitionBase/physicalexercisedetector.h \
-    RecognitionBase/marker.h \
+    RecognitionBase/MarkersStorage/marker.h \
     RecognitionBase/BackgroundSubtraction/bgteacher.h \
     RecognitionBase/BackgroundSubtraction/bgdetector.h \
     RecognitionBase/MarkerFinder/markerfinder.h \
