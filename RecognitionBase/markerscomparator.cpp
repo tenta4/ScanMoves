@@ -8,6 +8,12 @@ float MarkersComparator::compare(MarkersStorage etalon_movement,
     std::vector <std::vector <Marker> > etalon_ms = etalon_movement.getMarkersVector();
     std::vector <std::vector <Marker> > user_ms = user_movement.getMarkersVector();
 
+    for (int i = 0 ; i < etalon_ms.size() ; i ++)
+    {
+        qDebug()<<"size_"<<etalon_ms.at(i).size();
+    }
+
+
     int curr_pos = 0;
     int check_count = 10;
     float result = 0;
@@ -20,6 +26,7 @@ float MarkersComparator::compare(MarkersStorage etalon_movement,
         for (int j = curr_pos ; ( j < curr_pos + check_count ) && ( j < etalon_ms.size() ) ; j++)
         {
             std::vector <Marker> etal_ms_vec = etalon_ms.at(j);
+            qDebug()<<etal_ms_vec.size() << "size";
             rating[j - curr_pos] = compare(etal_ms_vec, user_ms_vec);
         }
 
@@ -62,5 +69,5 @@ float MarkersComparator::compare(std::vector<Marker> etalon, std::vector<Marker>
         }
     }
 //    return_res /= user.size();
-    return return_res;
+    return (return_res? return_res : 1e6);
 }

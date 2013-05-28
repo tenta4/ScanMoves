@@ -65,7 +65,6 @@ PhysicalExerciseDetector::~PhysicalExerciseDetector()
 
 MarkersStorage  PhysicalExerciseDetector::getMarkersStorage()
 {
-   // markers_storage->convertToPolarCS();
     return *markers_storage;
 }
 

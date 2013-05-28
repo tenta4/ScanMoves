@@ -78,11 +78,9 @@ void GameModule::showTaskMode(char *movement_name)
 int GameModule::gameMode()
 {
 
-    char* movement_name = "tt";
+    char* movement_name = "two_markers";
 
     //showTaskMode(movement_name);
-
-    std::vector <IplImage*> images;
 
     QTime time;
 

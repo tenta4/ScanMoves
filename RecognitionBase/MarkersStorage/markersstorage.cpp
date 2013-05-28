@@ -11,6 +11,7 @@ MarkersStorage::MarkersStorage(CvSize2D32f camera_angles, CvSize2D32f image_reso
 void MarkersStorage::pushPolarMarkers(std::vector<Marker> input_markers)
 {
     all_video_markers.push_back(input_markers);
+
 }
 
 void MarkersStorage::pushImageMarkers(std::vector<Marker> input_markers)

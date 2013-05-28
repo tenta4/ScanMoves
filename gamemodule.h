@@ -2,7 +2,7 @@
 #define GAMEMODULE_H
 
 #define MARKERS_SIZE 80
-#define WRITE_TO_FILE 0
+#define WRITE_TO_FILE 2
 #define MAX_CAM_CADR 10
 #include "opencv/highgui.h"
 #include "vector"
