@@ -10,10 +10,13 @@ class MarkersStorage
     float markers_real_size;
     CvSize2D32f camera_angles;
     CvSize2D32f image_resol;
+    CvSize2D32f half_camera_ang;
+    CvSize2D32f half_image_size;
     std::vector <std::vector <Marker> >        all_video_markers;
 
 public:
-    void pushMarkers(std::vector <Marker> input_markers);
+    void pushImageMarkers(std::vector <Marker> input_markers);
+    void pushPolarMarkers(std::vector <Marker> input_markers);
     std::vector <std::vector <Marker> >   getMarkersVector() const {return all_video_markers;}
     std::vector <std::vector <Marker> >&  getMarkersVector() {return all_video_markers;}
     void convertToPolarCS();

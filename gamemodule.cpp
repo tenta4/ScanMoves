@@ -125,19 +125,32 @@ void GameModule::resultMode(char *movement_name)
 
     MarkersIO::openMovement(movement_name, etal_ms);
 
-    qDebug()<<"result"<<MarkersComparator::compare(etal_ms, user_ms);
+    std::vector <int> corresponds_indexes;
+    qDebug()<<"result"<<MarkersComparator::compare(etal_ms, user_ms, corresponds_indexes);
 
-    IplImage* result = cvCreateImage(cvSize(camera->getWidth(), camera->getHeight()), 8, 3);
 
-    MarkersDrawing::draw(result, user_ms, 1);
-    MarkersDrawing::draw(result, etal_ms, 2);
+    std::vector<std::vector <Marker> > ms = user_ms.getMarkersVector();
+    std::vector<std::vector <Marker> > es = etal_ms.getMarkersVector();
 
-    while (1)
-    {
-        cvShowImage("ScanMoves", result);
-        char c =cvWaitKey(10);
-        if (c == 27) break;
-    }
+    int position = 0;
+
+       while (1)
+       {
+           if (position < 0) position = 0 ;
+           else if (position >= ms.size()) position = ms.size()-1;
+           IplImage* draw = cvCreateImage(cvSize(640,480), 8, 3);
+           MarkersDrawing::draw(draw, user_ms, 1);
+           MarkersDrawing::draw(draw, etal_ms, 2);
+           MarkersDrawing::draw(draw, ms.at(position));
+           MarkersDrawing::draw(draw, es.at(corresponds_indexes.at(position)));
+           cvShowImage("ScanMoves", draw);
+           char c =cvWaitKey(10);
+           if (c == 'a') position--;
+           else if (c == 'd') position++;
+           else if (c == 27) break;
+           cvReleaseImage(&draw);
+       }
+
 
 }
 

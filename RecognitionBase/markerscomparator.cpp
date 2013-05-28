@@ -1,10 +1,12 @@
 #include "markerscomparator.h"
 
 
-float MarkersComparator::compare(MarkersStorage etalon_movement, MarkersStorage& user_movement)
+float MarkersComparator::compare(MarkersStorage etalon_movement,
+                                 MarkersStorage user_movement,
+                                 std::vector <int>& corresponds_indexes)
 {
     std::vector <std::vector <Marker> > etalon_ms = etalon_movement.getMarkersVector();
-    std::vector <std::vector <Marker> >& user_ms = user_movement.getMarkersVector();
+    std::vector <std::vector <Marker> > user_ms = user_movement.getMarkersVector();
 
     int curr_pos = 0;
     int check_count = 10;
@@ -31,7 +33,8 @@ float MarkersComparator::compare(MarkersStorage etalon_movement, MarkersStorage&
         result += rating[min_id];
         curr_pos = curr_pos + min_id;
 
-        for (int j = 0 ; j < etalon_ms.at(curr_pos).size() ; j++) user_ms.at(i).push_back(etalon_ms.at(curr_pos).at(j));
+        corresponds_indexes.push_back(curr_pos);
+
         qDebug()<<"user frame"<<i <<"etalon_frame"<< curr_pos;
     }
     return result;

@@ -76,7 +76,7 @@ void MarkersIO::openMovement(const char *name, MarkersStorage &markers)
             file >> m.coord_z;
             markers_vec.push_back(m);
         }
-        markers.pushMarkers(markers_vec);
+        markers.pushPolarMarkers(markers_vec);
     }
     file.close();
 

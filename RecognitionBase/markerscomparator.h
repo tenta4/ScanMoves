@@ -6,8 +6,11 @@
 class MarkersComparator
 {
 public:
-    static float compare(MarkersStorage etalon_movement, MarkersStorage& user_movement);
-    static float compare(std::vector <Marker>, std::vector <Marker>);
+    static float compare(MarkersStorage etalon_movement,
+                         MarkersStorage user_movement,
+                         std::vector <int>& corresponds_indexes);
+    static float compare(std::vector <Marker> etalon,
+                         std::vector <Marker> user);
 };
 
 #endif // MARKERSCOMPARATOR_H
