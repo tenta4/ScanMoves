@@ -80,7 +80,7 @@ int GameModule::gameMode()
 
     char* movement_name = "tt";
 
-    showTaskMode(movement_name);
+    //showTaskMode(movement_name);
 
     std::vector <IplImage*> images;
 
@@ -93,11 +93,6 @@ int GameModule::gameMode()
           time.start();
 
           IplImage* image = camera->getFrame();
-
-          IplImage* image2 = cvCreateImage(cvSize(640,480),8,3);
-          //cvFlip
-          cvCopy(image,image2);
-          images.push_back(image2);
 
           if (WRITE_TO_FILE == 1)
           {
@@ -117,37 +112,32 @@ int GameModule::gameMode()
 
     }
 
+    resultMode(movement_name);
+    detector->clearMarkersStorage();
+
+}
+
+void GameModule::resultMode(char *movement_name)
+{
+
     MarkersStorage user_ms = detector->getMarkersStorage();
     MarkersStorage etal_ms(camera->getCameraAngles(), cvSize2D32f(camera->getWidth(),camera->getHeight()));
 
-
     MarkersIO::openMovement(movement_name, etal_ms);
 
-    etal_ms.convertToImageCS();
     qDebug()<<"result"<<MarkersComparator::compare(etal_ms, user_ms);
-    MarkersDrawing::draw(images,user_ms);
 
+    IplImage* result = cvCreateImage(cvSize(camera->getWidth(), camera->getHeight()), 8, 3);
 
-    int position = 0;
+    MarkersDrawing::draw(result, user_ms, 1);
+    MarkersDrawing::draw(result, etal_ms, 2);
 
     while (1)
     {
-        if (position < 0) position = 0 ;
-        else if (position >= images.size()) position = images.size()-1;
-
-        cvShowImage("ScanMoves", images[position]);
+        cvShowImage("ScanMoves", result);
         char c =cvWaitKey(10);
-        if (c == 'a') position--;
-        else if (c == 'd') position++;
-        else if (c == 27) break;
+        if (c == 27) break;
     }
-
-    //clear trach data
-    for (int i = 0 ; i < images.size() ; i++)
-    {
-        cvReleaseImage(&images.at(i));
-    }
-    detector->clearMarkersStorage();
 
 }
 

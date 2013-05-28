@@ -24,8 +24,9 @@ class GameModule
 
     int getMenueItem( std::vector <std::string> items);
     void adaptationMode();
+    void resultMode(char* movement_name);
     void showTaskMode(char* movement_name);
-    int gameMode();
+    int  gameMode();
     IWebCam *camera;
     PhysicalExerciseDetector* detector;
     int waitingWND(const char*, bool is_show_timer = true, int delay = 60);
