@@ -130,45 +130,34 @@ void GameModule::resultMode(char *movement_name)
     std::vector<std::vector <Marker> > ms = user_ms.getMarkersVector();
     std::vector<std::vector <Marker> > es = etal_ms.getMarkersVector();
 
+    IplImage * all_mark = cvCreateImage(cvSize(640,480),8,3);
+    IplImage* draw = cvCreateImage(cvSize(640,480), 8, 3);
+    MarkersDrawing::draw(all_mark, user_ms, 1);
+    MarkersDrawing::draw(all_mark, etal_ms, 2);
+
     int position = 0;
 
-       while (1)
-       {
-           if (position < 0) position = 0 ;
-           else if (position >= ms.size()) position = ms.size()-1;
-           IplImage* draw = cvCreateImage(cvSize(640,480), 8, 3);
-           MarkersDrawing::draw(draw, user_ms, 1);
-           MarkersDrawing::draw(draw, etal_ms, 2);
-           MarkersDrawing::draw(draw, ms.at(position));
-           MarkersDrawing::draw(draw, es.at(corresponds_indexes.at(position)));
-           cvShowImage("ScanMoves", draw);
-           char c =cvWaitKey(10);
-           if (c == 'a') position--;
-           else if (c == 'd') position++;
-           else if (c == 27) break;
-           cvReleaseImage(&draw);
-       }
+    while (1)
+    {
+        if (position < 0) position = 0 ;
+        else if (position >= ms.size()) position = ms.size()-1;
+        cvCopy(all_mark, draw);
+        MarkersDrawing::draw(draw, ms.at(position));
+        MarkersDrawing::draw(draw, es.at(corresponds_indexes.at(position)));
+        cvShowImage("ScanMoves", draw);
+        char c =cvWaitKey(10);
+        if (c == 'a') position--;
+        else if (c == 'd') position++;
+        else if (c == 27) break;
+    }
+    cvReleaseImage(&draw);
+    cvReleaseImage(&all_mark);
 
 
 }
 
 void GameModule::adaptationMode()
 {
-    waitingWND("Go away from screen");
-    for(int i=0;i<MAX_CAM_CADR;i++)
-    {
-
-          IplImage* image = camera->getFrame();
-          if ( i < MAX_CAM_CADR/2) continue;
-          detector->pushBackGroungImage(image);
-
-          if (WRITE_TO_FILE == 1) _writeToFile(image);
-
-          cvShowImage( "ScanMoves", image);
-
-          cvWaitKey(20);
-
-    }
     waitingWND("Go to screen");
 
     for(int i=0;i<MAX_CAM_CADR*6;i++)
@@ -199,6 +188,22 @@ void GameModule::adaptationMode()
           cvShowImage( "ScanMoves", image);
 
     }
+    waitingWND("Go away from screen");
+    for(int i=0;i<MAX_CAM_CADR;i++)
+    {
+
+          IplImage* image = camera->getFrame();
+          if ( i < MAX_CAM_CADR/2) continue;
+          detector->pushBackGroungImage(image);
+
+          if (WRITE_TO_FILE == 1) _writeToFile(image);
+
+          cvShowImage( "ScanMoves", image);
+
+          cvWaitKey(20);
+
+    }
+
     waitingWND("Adaptation finished", false);
 
 }

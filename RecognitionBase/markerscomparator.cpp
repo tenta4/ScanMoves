@@ -15,7 +15,7 @@ float MarkersComparator::compare(MarkersStorage etalon_movement,
 
 
     int curr_pos = 0;
-    int check_count = 10;
+    int check_count = 5;
     float result = 0;
     for ( int i = 0 ; i < user_ms.size() ; i++)
     {
