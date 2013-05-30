@@ -14,7 +14,7 @@ void MarkersStorage::pushPolarMarkers(std::vector<Marker> input_markers)
 
 }
 
-void MarkersStorage::pushImageMarkers(std::vector<Marker> input_markers)
+std::vector <Marker> MarkersStorage::pushImageMarkers(std::vector<Marker> input_markers)
 {
     for (int j = 0 ; j < input_markers.size() ; j++)
     {
@@ -33,15 +33,16 @@ void MarkersStorage::pushImageMarkers(std::vector<Marker> input_markers)
         //todo - calc, using camera angles
         tmp_marker.coord_z = 710.0 * markers_real_size / tmp_marker.getMaxWidth();
 
-        qDebug()<<"*************";
-        qDebug()<< "left x,y "<<tmp_marker.left.x   <<tmp_marker.left.y;
-        qDebug()<< "right x,y"<<tmp_marker.rihgt.x  <<tmp_marker.rihgt.y;
-        qDebug()<< "center"   <<marker_center.x     <<marker_center.y;
-        qDebug()<< "pol id="  <<tmp_marker.id_marker<<"x,y,z ="<< tmp_marker.angle_x << tmp_marker.angle_y << tmp_marker.coord_z;
+//        qDebug()<<"*************";
+//        qDebug()<< "left x,y "<<tmp_marker.left.x   <<tmp_marker.left.y;
+//        qDebug()<< "right x,y"<<tmp_marker.rihgt.x  <<tmp_marker.rihgt.y;
+//        qDebug()<< "center"   <<marker_center.x     <<marker_center.y;
+//        qDebug()<< "pol id="  <<tmp_marker.id_marker<<"x,y,z ="<< tmp_marker.angle_x << tmp_marker.angle_y << tmp_marker.coord_z;
 
     }
 
     all_video_markers.push_back(input_markers);
+    return input_markers;
 }
 
 MarkersStorage::~MarkersStorage()
@@ -71,7 +72,7 @@ void MarkersStorage::convertToImageCS()
             m.buttom = cvPoint( marker_center.x, marker_center.y + markers_half_width);
 
             marker_vec.at(j) = m ;
-            qDebug()<<marker_center.x<<marker_center.y<<markers_half_width<<(m.angle_y / half_camera_ang.width * half_image_size.width + half_image_size.width);
+            //qDebug()<<marker_center.x<<marker_center.y<<markers_half_width<<(m.angle_y / half_camera_ang.width * half_image_size.width + half_image_size.width);
         }
         all_video_markers.at(i) = marker_vec;
     }
@@ -89,7 +90,7 @@ void MarkersStorage::convertToPolarCS()
     CvSize2D32f  half_image_size    = cvSize2D32f(320 , 240 );
     CvSize2D32f  half_camera_angles = cvSize2D32f(30.0, 22.0);
 
-    qDebug()<<"********************************************************";
+    //qDebug()<<"********************************************************";
 
     for (int j = 0 ; j < all_video_markers.size() ; j++)
     {
@@ -112,11 +113,11 @@ void MarkersStorage::convertToPolarCS()
             //todo - calc, using camera angles
             tmp_marker.coord_z = 710.0 * markers_real_size / tmp_marker.getMaxWidth();
 
-            qDebug()<<"*************";
-            qDebug()<< "left x,y "<<tmp_marker.left.x   <<tmp_marker.left.y;
-            qDebug()<< "right x,y"<<tmp_marker.rihgt.x  <<tmp_marker.rihgt.y;
-            qDebug()<< "center"   <<marker_center.x     <<marker_center.y;
-            qDebug()<< "pol id="  <<tmp_marker.id_marker<<"x,y,z ="<< tmp_marker.angle_x << tmp_marker.angle_y << tmp_marker.coord_z;
+//            qDebug()<<"*************";
+//            qDebug()<< "left x,y "<<tmp_marker.left.x   <<tmp_marker.left.y;
+//            qDebug()<< "right x,y"<<tmp_marker.rihgt.x  <<tmp_marker.rihgt.y;
+//            qDebug()<< "center"   <<marker_center.x     <<marker_center.y;
+//            qDebug()<< "pol id="  <<tmp_marker.id_marker<<"x,y,z ="<< tmp_marker.angle_x << tmp_marker.angle_y << tmp_marker.coord_z;
 
             tmp_markers_vec.at(i) = tmp_marker;
         }

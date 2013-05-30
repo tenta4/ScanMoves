@@ -30,7 +30,7 @@ void PhysicalExerciseDetector::pushEtalonMarkersImage(const IplImage * input_img
     colors_storage->setEtalon(hsv_tmp_img,init_markers_position);
 }
 
-void PhysicalExerciseDetector::pushGameImage(const IplImage * input_img)
+std::vector <Marker> PhysicalExerciseDetector::pushGameImage(const IplImage * input_img)
 {
     if (input_img->width != images_width || input_img->height != images_height)
         throw std::out_of_range("resolution error in PhysicalExerciseDetector");
@@ -47,11 +47,8 @@ void PhysicalExerciseDetector::pushGameImage(const IplImage * input_img)
         cvCvtColor(input_img,hsv_tmp_img, CV_BGR2HSV);
         bgdetector->checkImg(hsv_tmp_img);
         std::vector <Marker> found_markers = marker_finder->getMarkers(hsv_tmp_img, colors_storage);
-        markers_storage->pushImageMarkers(found_markers);
-
-        MarkersDrawing::draw(hsv_tmp_img, found_markers);
-
-        cvShowImage("ScanMoves", hsv_tmp_img);
+        found_markers = markers_storage->pushImageMarkers(found_markers);
+        return found_markers;
     }
 }
 PhysicalExerciseDetector::~PhysicalExerciseDetector()

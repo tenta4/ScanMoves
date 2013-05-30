@@ -82,6 +82,12 @@ int GameModule::gameMode()
 
     //showTaskMode(movement_name);
 
+    MarkersStorage etal_ms(camera->getCameraAngles(), cvSize2D32f(camera->getWidth(),camera->getHeight()));
+    MarkersIO::openMovement(movement_name, etal_ms);
+    MarkersComparator comparator(etal_ms);
+    std::vector <Marker> tmp_user;
+    std::vector <Marker> tmp_etalon;
+
     QTime time;
 
     int sum = 0;
@@ -97,16 +103,21 @@ int GameModule::gameMode()
               _writeToFile(image);
           }
 
-          detector->pushGameImage(image);
+          tmp_user = detector->pushGameImage(image);
 
+          int result_id;
+          comparator.compare(tmp_user, tmp_etalon, result_id);
+          MarkersDrawing::draw(image, tmp_user, cvScalar(0, 0, 200));
+          MarkersDrawing::draw(image, tmp_etalon, cvScalar(0, 200, 0));
           int timer_value = time.elapsed();
-          qDebug()<<timer_value;
+          qDebug()<<timer_value<<"time";
           sum += timer_value;
           count ++ ;
           qDebug()<<"middle"<<sum/count;
 
-
+          cvShowImage("ScanMoves", image);
           if( cvWaitKey(1) >= 0 ) break;
+          if(result_id == -1) break;
 
     }
 
@@ -131,7 +142,7 @@ void GameModule::resultMode(char *movement_name)
     std::vector<std::vector <Marker> > es = etal_ms.getMarkersVector();
 
     IplImage * all_mark = cvCreateImage(cvSize(640,480),8,3);
-    IplImage* draw = cvCreateImage(cvSize(640,480), 8, 3);
+    IplImage* img_result = cvCreateImage(cvSize(640,480), 8, 3);
     MarkersDrawing::draw(all_mark, user_ms, 1);
     MarkersDrawing::draw(all_mark, etal_ms, 2);
 
@@ -141,16 +152,16 @@ void GameModule::resultMode(char *movement_name)
     {
         if (position < 0) position = 0 ;
         else if (position >= ms.size()) position = ms.size()-1;
-        cvCopy(all_mark, draw);
-        MarkersDrawing::draw(draw, ms.at(position));
-        MarkersDrawing::draw(draw, es.at(corresponds_indexes.at(position)));
-        cvShowImage("ScanMoves", draw);
+        cvCopy(all_mark, img_result);
+        MarkersDrawing::draw(img_result, ms.at(position) , cvScalar(0, 0, 200));
+        MarkersDrawing::draw(img_result, es.at(corresponds_indexes.at(position)), cvScalar(200, 0, 0));
+        cvShowImage("ScanMoves", img_result);
         char c =cvWaitKey(10);
         if (c == 'a') position--;
         else if (c == 'd') position++;
         else if (c == 27) break;
     }
-    cvReleaseImage(&draw);
+    cvReleaseImage(&img_result);
     cvReleaseImage(&all_mark);
 
 

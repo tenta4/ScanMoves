@@ -15,7 +15,7 @@ class MarkersStorage
     std::vector <std::vector <Marker> >        all_video_markers;
 
 public:
-    void pushImageMarkers(std::vector <Marker> input_markers);
+    std::vector <Marker> pushImageMarkers(std::vector <Marker> input_markers);
     void pushPolarMarkers(std::vector <Marker> input_markers);
     std::vector <std::vector <Marker> >   getMarkersVector() const {return all_video_markers;}
     std::vector <std::vector <Marker> >&  getMarkersVector() {return all_video_markers;}
