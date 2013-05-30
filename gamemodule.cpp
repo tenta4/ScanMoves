@@ -34,6 +34,9 @@ GameModule::GameModule()
 
     detector = new PhysicalExerciseDetector(camera->getCameraAngles(),camera->getWidth(),camera->getHeight(), MARKERS_SIZE);
 
+    cvNamedWindow("ScanMoves", CV_WINDOW_NORMAL);
+    cvSetWindowProperty("ScanMoves", CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
+
     std::vector <std::string> items;
     items.push_back("PLAY");
     items.push_back("ADAPTATE");
@@ -109,15 +112,17 @@ int GameModule::gameMode()
           comparator.compare(tmp_user, tmp_etalon, result_id);
           MarkersDrawing::draw(image, tmp_user, cvScalar(0, 0, 200));
           MarkersDrawing::draw(image, tmp_etalon, cvScalar(0, 200, 0));
-          int timer_value = time.elapsed();
-          qDebug()<<timer_value<<"time";
-          sum += timer_value;
-          count ++ ;
-          qDebug()<<"middle"<<sum/count;
 
           cvShowImage("ScanMoves", image);
+
           if( cvWaitKey(1) >= 0 ) break;
           if(result_id == -1) break;
+
+          int timer_value = time.elapsed();
+          sum += timer_value;
+          count ++ ;
+          qDebug()<<timer_value<<"time";
+          qDebug()<<"middle"<<sum/count;
 
     }
 

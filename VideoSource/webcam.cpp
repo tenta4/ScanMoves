@@ -43,7 +43,7 @@ IplImage * WebCam::getFrame()
         cvRemap( image1, t, mapx, mapy,CV_INTER_LINEAR | CV_WARP_FILL_OUTLIERS, CV_RGB(255,0,0)); // undistort image
         cvFlip(t, image1, 1);
         cvReleaseImage( &t );
-    }
+    }else cvFlip(image1, image1, 1);
     return image1;
 }
 int WebCam::getHeight()
