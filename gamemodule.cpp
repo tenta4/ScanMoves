@@ -81,9 +81,9 @@ void GameModule::showTaskMode(char *movement_name)
 int GameModule::gameMode()
 {
 
-    char* movement_name = "two_markers";
+    char* movement_name = "presentation1";
 
-    //showTaskMode(movement_name);
+    showTaskMode(movement_name);
 
     MarkersStorage etal_ms(camera->getCameraAngles(), cvSize2D32f(camera->getWidth(),camera->getHeight()));
     MarkersIO::openMovement(movement_name, etal_ms);
@@ -165,6 +165,7 @@ void GameModule::resultMode(char *movement_name)
         if (c == 'a') position--;
         else if (c == 'd') position++;
         else if (c == 27) break;
+        qDebug()<<position;
     }
     cvReleaseImage(&img_result);
     cvReleaseImage(&all_mark);

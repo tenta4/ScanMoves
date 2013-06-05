@@ -28,11 +28,11 @@ void MoveCreator::recordMode()
           detector->pushGameImage(image);
 
           IplImage * tmp_image = cvCreateImage(cvGetSize(image),image->depth, image->nChannels);
+          cvShowImage("ScanMoves", image);
           cvCopy(image, tmp_image);
           images.push_back(tmp_image);
           if (images.size() > 500) break;
           if( cvWaitKey(1) >= 0 ) break;
-
     }
 
 }

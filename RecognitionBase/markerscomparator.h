@@ -7,7 +7,7 @@ class MarkersComparator
 {
     MarkersStorage *etal_ms;
     int curr_pos;
-    const static int check_count = 7;
+    const static int check_count = 3;
 public:
     void compare(const std::vector <Marker>& user_frame, std::vector <Marker>& etal_frame, int& result_id);
     MarkersComparator(const MarkersStorage etalon);

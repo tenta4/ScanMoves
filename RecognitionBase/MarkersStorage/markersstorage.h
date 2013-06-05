@@ -18,8 +18,7 @@ public:
     std::vector <Marker> pushImageMarkers(std::vector <Marker> input_markers);
     void pushPolarMarkers(std::vector <Marker> input_markers);
     std::vector <std::vector <Marker> >   getMarkersVector() const {return all_video_markers;}
-    std::vector <std::vector <Marker> >&  getMarkersVector() {return all_video_markers;}
-    void convertToPolarCS();
+    //std::vector <std::vector <Marker> >&  getMarkersVector() {return all_video_markers;}
     void convertToImageCS();
     void clearStorage();
     MarkersStorage(

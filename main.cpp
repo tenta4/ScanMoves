@@ -8,8 +8,6 @@ int main(int argc, char** argv)
     else
     {
         MoveCreator mc(argv[1]);
-        qDebug()<<"test";
-
     }
     return 0;
 }
