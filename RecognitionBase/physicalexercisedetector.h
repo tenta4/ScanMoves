@@ -26,7 +26,6 @@ public:
     void pushBackGroungImage(const IplImage*);
     void pushEtalonMarkersImage(const IplImage*, std::vector <CvPoint> init_markers_position);
     std::vector <Marker> pushGameImage(const IplImage*);
-    void saveMovement(const char * name);
     MarkersStorage   getMarkersStorage();
     void clearMarkersStorage();
     ~MarkersSetRecognizer();

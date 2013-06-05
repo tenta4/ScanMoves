@@ -65,7 +65,3 @@ MarkersStorage  MarkersSetRecognizer::getMarkersStorage()
     return *markers_storage;
 }
 
-void MarkersSetRecognizer::saveMovement(const char *name)
-{
-
-}
