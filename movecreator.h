@@ -15,7 +15,7 @@
 class MoveCreator
 {
     IWebCam *camera;
-    PhysicalExerciseDetector* detector;
+    MarkersSetRecognizer* detector;
     std::vector <IplImage*> images;
 public:
     MoveCreator(const char* name);

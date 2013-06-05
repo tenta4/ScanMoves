@@ -1,6 +1,6 @@
 #include "physicalexercisedetector.h"
 
-PhysicalExerciseDetector::PhysicalExerciseDetector(CvSize2D32f camera_angles, int width, int height, float marker_size)
+MarkersSetRecognizer::MarkersSetRecognizer(CvSize2D32f camera_angles, int width, int height, float marker_size)
 {
     if (width<320 || width>2560 || height<240 && height<1536) throw std::out_of_range("bad images size");
     images_width   = width;
@@ -14,26 +14,26 @@ PhysicalExerciseDetector::PhysicalExerciseDetector(CvSize2D32f camera_angles, in
     hsv_tmp_img    = cvCreateImage(cvSize(640,480),8,3);
 
 }
-void PhysicalExerciseDetector::clearMarkersStorage()
+void MarkersSetRecognizer::clearMarkersStorage()
 {
     markers_storage->clearStorage();
 }
 
-void PhysicalExerciseDetector::pushBackGroungImage(const IplImage * input_img)
+void MarkersSetRecognizer::pushBackGroungImage(const IplImage * input_img)
 {
     cvCvtColor(input_img,hsv_tmp_img, CV_BGR2HSV);
     bgteacher->push(hsv_tmp_img);
 }
-void PhysicalExerciseDetector::pushEtalonMarkersImage(const IplImage * input_img, std::vector <CvPoint> init_markers_position)
+void MarkersSetRecognizer::pushEtalonMarkersImage(const IplImage * input_img, std::vector <CvPoint> init_markers_position)
 {
     cvCvtColor(input_img,hsv_tmp_img, CV_BGR2HSV);
     colors_storage->setEtalon(hsv_tmp_img,init_markers_position);
 }
 
-std::vector <Marker> PhysicalExerciseDetector::pushGameImage(const IplImage * input_img)
+std::vector <Marker> MarkersSetRecognizer::pushGameImage(const IplImage * input_img)
 {
     if (input_img->width != images_width || input_img->height != images_height)
-        throw std::out_of_range("resolution error in PhysicalExerciseDetector");
+        throw std::out_of_range("resolution error in MarkersSetRecognizer");
 
     if (!marker_finder || !bgteacher->getMiddle())
     {
@@ -51,7 +51,7 @@ std::vector <Marker> PhysicalExerciseDetector::pushGameImage(const IplImage * in
         return found_markers;
     }
 }
-PhysicalExerciseDetector::~PhysicalExerciseDetector()
+MarkersSetRecognizer::~MarkersSetRecognizer()
 {
     delete colors_storage;
     delete marker_finder;
@@ -60,12 +60,12 @@ PhysicalExerciseDetector::~PhysicalExerciseDetector()
     cvReleaseImage(&hsv_tmp_img);
 }
 
-MarkersStorage  PhysicalExerciseDetector::getMarkersStorage()
+MarkersStorage  MarkersSetRecognizer::getMarkersStorage()
 {
     return *markers_storage;
 }
 
-void PhysicalExerciseDetector::saveMovement(const char *name)
+void MarkersSetRecognizer::saveMovement(const char *name)
 {
 
 }

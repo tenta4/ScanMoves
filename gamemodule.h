@@ -28,7 +28,7 @@ class GameModule
     void showTaskMode(char* movement_name);
     int  gameMode();
     IWebCam *camera;
-    PhysicalExerciseDetector* detector;
+    MarkersSetRecognizer* detector;
     int waitingWND(const char*, bool is_show_timer = true, int delay = 60);
 public:
     GameModule();

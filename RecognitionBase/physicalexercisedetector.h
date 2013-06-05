@@ -10,7 +10,7 @@
 
 #include "MarkersStorage/markersstorage.h"
 #include "markersdrawing.h"
-class PhysicalExerciseDetector
+class MarkersSetRecognizer
 {
     int images_width;
     int images_height;
@@ -22,14 +22,14 @@ class PhysicalExerciseDetector
     MarkersStorage* markers_storage;
 
 public:
-    PhysicalExerciseDetector(CvSize2D32f camera_angles, int images_width, int images_height, float marker_size);
+    MarkersSetRecognizer(CvSize2D32f camera_angles, int images_width, int images_height, float marker_size);
     void pushBackGroungImage(const IplImage*);
     void pushEtalonMarkersImage(const IplImage*, std::vector <CvPoint> init_markers_position);
     std::vector <Marker> pushGameImage(const IplImage*);
     void saveMovement(const char * name);
     MarkersStorage   getMarkersStorage();
     void clearMarkersStorage();
-    ~PhysicalExerciseDetector();
+    ~MarkersSetRecognizer();
 
 };
 

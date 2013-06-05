@@ -32,7 +32,7 @@ GameModule::GameModule()
     if (WRITE_TO_FILE != 2)  camera = new WebCam("../distorsion_coeff.xml","../camera_matrix.xml");
     else camera = new WebCamEmul();
 
-    detector = new PhysicalExerciseDetector(camera->getCameraAngles(),camera->getWidth(),camera->getHeight(), MARKERS_SIZE);
+    detector = new MarkersSetRecognizer(camera->getCameraAngles(),camera->getWidth(),camera->getHeight(), MARKERS_SIZE);
 
     cvNamedWindow("ScanMoves", CV_WINDOW_NORMAL);
     cvSetWindowProperty("ScanMoves", CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
