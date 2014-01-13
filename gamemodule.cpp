@@ -81,7 +81,7 @@ void GameModule::showTaskMode(char *movement_name)
 int GameModule::gameMode()
 {
 
-    char* movement_name = "presentation1";
+    char* movement_name = "two_markers";
 
     showTaskMode(movement_name);
 
